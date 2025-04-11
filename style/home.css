@@ -106,3 +106,23 @@
     height: 1px;
     background-color: black;
 }
+.main{
+    display: block;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.add-task-btn{
+    padding: 5px;
+    width: 100px;
+}
+.task-list-item{
+    margin-top: 30px;
+}
+.name ,.description,.tag{
+    padding: 10px;
+    margin-right: 10px;
+}
+.task-create-btn{
+    padding: 9px;
+}
