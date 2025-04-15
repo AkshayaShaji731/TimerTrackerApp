@@ -150,3 +150,15 @@ body{
     margin-top: 15px;
     color: white;
 }
+.start-stop-btn-cs{
+    position: absolute;
+    top:300px;
+    right: 600px;
+    padding: 30px;
+    background-color: white; 
+    border-radius: 3px;
+
+}
+.start-stop-btn-cs span{
+    color: black;
+}
