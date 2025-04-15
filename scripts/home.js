@@ -1,36 +1,70 @@
 import { createNavBar } from "../data/navbar.js"
+import { taskName, taskNumber, taskDsecription, taskTag, createActionBtn } from "../data/create-task-list.js"
+
+
 const dateEl = document.querySelector(".date")
 const taskBtn = document.querySelector('.add-task-btn')
-const task=document.querySelector('.task-list-item')
-const taskContainer=document.querySelector('.main-container')
- let active="active"
+const task = document.querySelector('.task-list-item')
+// const taskContainer=document.querySelector('.main-container')
+// const createBtn=document.querySelector('.task-create-btn')
+
+let active = "active"
+
+
 getDate()
 createNavBar()
-function getDate() {
-    const date = new Date()
-    dateEl.innerHTML = date.toDateString()
-}
+
 taskBtn.addEventListener('click', () => {
     createTask()
 })
 
+// function createBtn(){
+//     taskNumber()
+//     taskName()
+//     taskDsecription()
+//     taskTag()
+//     onclick="createBtn()
+//     createActionBtn()
+// }
+
+function getDate() {
+    const date = new Date()
+    dateEl.innerHTML = date.toDateString()
+}
+
+
 function createTask() {
-    if(active=="active"){
+    if (active == "active") {
         task.innerHTML = `
         <label for="name">Enter your task</label>
         <input type="text" id="name" placeholder="Enter the task" class="name">
         <label for="decription">write Description</label>
-        <input type="text" id="decription" placeholder="Description" class="description">
+        <input type="text" id="description" placeholder="Description" class="description">
         <label for="tag">Give tag</label>
         <input type="text" id="tag" placeholder="tag" class="tag">
-        <button class="task-create-btn">Create</button>` 
-        active="inactive"
+        <button class="task-create-btn" >Create</button>`
+        active = "inactive"
+
+        const createBtn = document.querySelector('.task-create-btn')
+        const getName = document.getElementById('name')
+        const getDescription = document.getElementById('description')
+        const getTag = document.getElementById('tag')
+        const checkName=getName.value
+
+        createBtn.addEventListener('click', () => {
+                taskNumber()
+                taskName(getName)
+                taskDsecription(getDescription)
+                taskTag(getTag)
+                createActionBtn()
+        })
     }
-    else{
-        task.innerHTML=""
-        active="active"
+    else {
+        task.innerHTML = ""
+        active = "active"
     }
 }
+
 
 
 
