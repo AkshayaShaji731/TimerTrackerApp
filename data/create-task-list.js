@@ -1,4 +1,5 @@
 const displayTaskNo = document.querySelector('.task-num')
+const displayDate=document.querySelector('.task-date')
 const displayTaskName = document.querySelector('.task-name')
 const displayTaskDesc = document.querySelector('.task-description')
 const displayTaskTag = document.querySelector('.task-tag')
@@ -6,12 +7,14 @@ const displayTaskTag = document.querySelector('.task-tag')
 const displayBtn = document.querySelector('.task-btn')
 
 
-export function createTasklist(getName, getDescription, getTag) {
+
+export function createTasklist(getName, getDescription, getTag,getDate) {
     if (getName.value == '') {
         alert("Please enter the Task Name")
     }
     else {
         taskNumber();
+        taskDate(getDate)
         taskName(getName)
         taskDsecription(getDescription)
         taskTag(getTag)
@@ -28,6 +31,13 @@ let sNum = 1
     displayTaskNo.appendChild(taskNum)
 }
 
+ function taskDate(getDate){
+    const tDate=document.createElement("div")
+    tDate.classList.add('t-date')
+    tDate.innerHTML=getDate.value
+    displayDate.appendChild(tDate);
+    getDate.value=""
+ }
 
  function taskName(getName) {
     const name = getName.value

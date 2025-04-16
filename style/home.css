@@ -139,7 +139,7 @@ body{
    text-align: center;
    color:white ;
 }
-.t-num ,.t-name,.t-tag,.t-des{
+.t-num ,.t-name,.t-tag,.t-des,.t-date{
   margin-top: 15px;
   color: white;
 }
