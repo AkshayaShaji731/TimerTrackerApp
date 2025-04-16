@@ -1,13 +1,26 @@
 const displayTaskNo = document.querySelector('.task-num')
-export const displayTaskName = document.querySelector('.task-name')
+const displayTaskName = document.querySelector('.task-name')
 const displayTaskDesc = document.querySelector('.task-description')
 const displayTaskTag = document.querySelector('.task-tag')
 // const displayTask=document.querySelector('.display-task')
 const displayBtn = document.querySelector('.task-btn')
 
 
+export function createTasklist(getName, getDescription, getTag) {
+    if (getName.value == '') {
+        alert("Please enter the Task Name")
+    }
+    else {
+        taskNumber();
+        taskName(getName)
+        taskDsecription(getDescription)
+        taskTag(getTag)
+        createActionBtn()
+    }
+}
+
 let sNum = 1
-export function taskNumber() {
+ function taskNumber() {
     const taskNum = document.createElement("div")
     taskNum.classList.add("t-num")
     taskNum.innerHTML = sNum;
@@ -15,7 +28,8 @@ export function taskNumber() {
     displayTaskNo.appendChild(taskNum)
 }
 
-export function taskName(getName) {
+
+ function taskName(getName) {
     const name = getName.value
     const tName = document.createElement("div")
     tName.classList.add("t-name")
@@ -24,24 +38,42 @@ export function taskName(getName) {
     getName.value = ""
 }
 
-export function taskDsecription(getDescription) {
+ function taskDsecription(getDescription) {
     const desc = getDescription.value
-    const taskDec = document.createElement("div")
-    taskDec.classList.add('t-des')
-    taskDec.innerHTML = desc
-    displayTaskDesc.appendChild(taskDec)
+    if (desc == '') {
+        const taskDec = document.createElement("div")
+        taskDec.classList.add('t-des')
+        taskDec.innerHTML = "--"
+        displayTaskDesc.appendChild(taskDec)
+    }
+    else {
+        const taskDec = document.createElement("div")
+        taskDec.classList.add('t-des')
+        taskDec.innerHTML = desc
+        displayTaskDesc.appendChild(taskDec)
+    }
     getDescription.value = ""
 }
 
-export function taskTag(getTag) {
+ function taskTag(getTag) {
     const tag = getTag.value
-    const tTag = document.createElement("div")
-    tTag.classList.add("t-tag")
-    tTag.innerHTML = tag
-    displayTaskTag.appendChild(tTag)
+    if (tag == '') {
+        const tTag = document.createElement("div")
+        tTag.classList.add("t-tag")
+        tTag.innerHTML = "--"
+        displayTaskTag.appendChild(tTag)
+    }
+    else {
+        {
+            const tTag = document.createElement("div")
+            tTag.classList.add("t-tag")
+            tTag.innerHTML = tag
+            displayTaskTag.appendChild(tTag)
+        }
+    }
     getTag.value = ""
 }
-export function createActionBtn() {
+ function createActionBtn() {
     const taskBtn = document.createElement("div")
 
     taskBtn.innerHTML = `

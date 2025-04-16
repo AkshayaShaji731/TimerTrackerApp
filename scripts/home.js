@@ -1,5 +1,5 @@
 import { createNavBar } from "../data/navbar.js"
-import { taskName, taskNumber, taskDsecription, taskTag, createActionBtn } from "../data/create-task-list.js"
+import { taskName, taskNumber, taskDsecription, taskTag, createActionBtn, createTasklist } from "../data/create-task-list.js"
 
 
 const dateEl = document.querySelector(".date")
@@ -37,7 +37,7 @@ function createTask() {
     if (active == "active") {
         task.innerHTML = `
         <label for="name">Enter your task</label>
-        <input type="text" id="name" placeholder="Enter the task" class="name">
+        <input type="text" id="name" placeholder="Enter the task" class="name" required>
         <label for="decription">write Description</label>
         <input type="text" id="description" placeholder="Description" class="description">
         <label for="tag">Give tag</label>
@@ -45,18 +45,15 @@ function createTask() {
         <button class="task-create-btn" >Create</button>`
         active = "inactive"
 
+        
         const createBtn = document.querySelector('.task-create-btn')
         const getName = document.getElementById('name')
         const getDescription = document.getElementById('description')
         const getTag = document.getElementById('tag')
-        const checkName=getName.value
+        const checkName = getDate.value
 
         createBtn.addEventListener('click', () => {
-                taskNumber()
-                taskName(getName)
-                taskDsecription(getDescription)
-                taskTag(getTag)
-                createActionBtn()
+            createTasklist(getName, getDescription, getTag)
         })
     }
     else {
