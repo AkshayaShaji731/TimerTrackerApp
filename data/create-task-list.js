@@ -1,5 +1,5 @@
 const displayTaskNo = document.querySelector('.task-num')
-const displayDate=document.querySelector('.task-date')
+const displayDate = document.querySelector('.task-date')
 const displayTaskName = document.querySelector('.task-name')
 const displayTaskDesc = document.querySelector('.task-description')
 const displayTaskTag = document.querySelector('.task-tag')
@@ -7,23 +7,32 @@ const displayTaskTag = document.querySelector('.task-tag')
 const displayBtn = document.querySelector('.task-btn')
 
 
+export function createLS(getName, getDescription, getTag, getDate) {
 
-export function createTasklist(getName, getDescription, getTag,getDate) {
-    if (getName.value == '') {
-        alert("Please enter the Task Name")
+    const name = getName.value
+    const date = getDate.value
+    const description = getDescription.value
+    const tag = getTag.value
+
+
+    if(name=='' && date==''){
+        alert("enter")
     }
-    else {
-        taskNumber();
-        taskDate(getDate)
-        taskName(getName)
-        taskDsecription(getDescription)
-        taskTag(getTag)
-        createActionBtn()
+    else{
+        let data = {
+            name: name,
+            description: description,
+            tag: tag,
+            date: date
+        }
+        let dataArray = JSON.parse(localStorage.getItem('task')) || [];
+        dataArray.push(data);
+    
+        localStorage.setItem('task', JSON.stringify(dataArray));
     }
 }
-
 let sNum = 1
- function taskNumber() {
+export function taskNumber() {
     const taskNum = document.createElement("div")
     taskNum.classList.add("t-num")
     taskNum.innerHTML = sNum;
@@ -31,26 +40,29 @@ let sNum = 1
     displayTaskNo.appendChild(taskNum)
 }
 
- function taskDate(getDate){
-    const tDate=document.createElement("div")
+export function taskDate(getDate) {
+    const date = getDate
+    const tDate = document.createElement("div")
     tDate.classList.add('t-date')
-    tDate.innerHTML=getDate.value
+    tDate.innerHTML = date
     displayDate.appendChild(tDate);
-    getDate.value=""
- }
+    // getDate.value = ""
 
- function taskName(getName) {
-    const name = getName.value
+}
+
+export function taskName(getName) {
+    const name = getName
+
     const tName = document.createElement("div")
     tName.classList.add("t-name")
     tName.innerHTML = name
     displayTaskName.appendChild(tName)
-    getName.value = ""
+    // getName.value = ""
 }
 
- function taskDsecription(getDescription) {
-    const desc = getDescription.value
-    if (desc == '') {
+export function taskDsecription(getDescription) {
+    const description = getDescription
+    if (description == '') {
         const taskDec = document.createElement("div")
         taskDec.classList.add('t-des')
         taskDec.innerHTML = "--"
@@ -59,14 +71,14 @@ let sNum = 1
     else {
         const taskDec = document.createElement("div")
         taskDec.classList.add('t-des')
-        taskDec.innerHTML = desc
+        taskDec.innerHTML = description
         displayTaskDesc.appendChild(taskDec)
     }
-    getDescription.value = ""
+    // getDescription.value = ""
 }
 
- function taskTag(getTag) {
-    const tag = getTag.value
+export function taskTag(getTag) {
+    const tag = getTag
     if (tag == '') {
         const tTag = document.createElement("div")
         tTag.classList.add("t-tag")
@@ -81,9 +93,9 @@ let sNum = 1
             displayTaskTag.appendChild(tTag)
         }
     }
-    getTag.value = ""
+    // getTag.value = ""
 }
- function createActionBtn() {
+export function createActionBtn() {
     const taskBtn = document.createElement("div")
 
     taskBtn.innerHTML = `
@@ -184,3 +196,6 @@ let sNum = 1
     })
 
 }
+
+
+

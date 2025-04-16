@@ -1,5 +1,5 @@
 import { createNavBar } from "../data/navbar.js"
-import { createTasklist } from "../data/create-task-list.js"
+import { taskNumber,taskName,taskDsecription,taskTag,taskDate,createActionBtn,createLS } from "../data/create-task-list.js"
 
 
 const dateEl = document.querySelector(".date")
@@ -13,6 +13,9 @@ let active = "active"
 
 getDate()
 createNavBar()
+
+let dataArray = JSON.parse(localStorage.getItem('task')) || [];
+displayList(taskNumber,taskName,taskDsecription,taskTag,taskDate,createActionBtn)
 
 taskBtn.addEventListener('click', () => {
     createTask()
@@ -43,15 +46,32 @@ function createTask() {
         const getName = document.getElementById('name')
         const getDescription = document.getElementById('description')
         const getTag = document.getElementById('tag')
-        const checkName = getDate.value
 
         createBtn.addEventListener('click', () => {
-            createTasklist(getName, getDescription, getTag,getDate)
+           createTaskList(getName, getDescription, getTag,getDate)
         })
     }
     else {
         task.innerHTML = ""
         active = "active"
+    }
+}
+function createTaskList(getName, getDescription, getTag,getDate){
+    createLS(getName, getDescription, getTag,getDate)
+    createTask()
+}
+function displayList(taskNumber,taskName,taskDsecription,taskTag,taskDate,createActionBtn){
+    for (let i = 0; i < dataArray.length; i++) {
+        let getDate = dataArray[i].date
+        let getName = dataArray[i].name
+        let getDescription = dataArray[i].description
+        let getTag = dataArray[i].tag
+        taskNumber();
+        taskDate(getDate);
+        taskDsecription(getDescription);
+        taskName(getName)
+        taskTag(getTag)
+        createActionBtn()  
     }
 }
 
