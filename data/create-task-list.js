@@ -33,35 +33,34 @@ function createlist(getDate, getTag, getDescription, getName, sNum, i) {
     })
 
     editBtn.addEventListener("click", (e) => {
-        let row=taskRow.children
-        let index=(row[0].innerHTML)-1
-        let data=dataArray[index]
-        
-        let nameEl=data.name
-        let descEl=data.description
-        let tagEl=data.tag
-         
-        let nameInput=  prompt("Enter the updated name:",nameEl);
-        let descInput=  prompt("Enter the updated decription:",descEl);
-        let tagInput=  prompt("Enter the updated tag:",tagEl);
- 
-        data.name=nameInput
-        data.description=descInput
-        data.tag=tagInput
-        
+        let row = taskRow.children
+        let index = (row[0].innerHTML) - 1
+        let data = dataArray[index]
+
+        let nameEl = data.name
+        let descEl = data.description
+        let tagEl = data.tag
+
+        let nameInput = prompt("Enter the updated name:", nameEl);
+        let descInput = prompt("Enter the updated decription:", descEl);
+        let tagInput = prompt("Enter the updated tag:", tagEl);
+
+        data.name = nameInput
+        data.description = descInput
+        data.tag = tagInput
+
         localStorage.setItem('task', JSON.stringify(dataArray));
         render(dataArray)
-
     })
-
-    let taskTime=[]
     timerEl.addEventListener('click', (e) => {
-        let active=true
-        if(active==true){
-             startStopBtn.style.display = "block"
+
+        let row = taskRow.children
+
+        let active = true
+        if (active == true) {
+            startStopBtn.style.display = "block"
         }
         startStopBtn.classList.add("start-stop-btn-cs")
-        // let timers = document.createElement("div")
 
         startStopBtn.innerHTML = `
             <div class="display-time">
@@ -74,8 +73,6 @@ function createlist(getDate, getTag, getDescription, getName, sNum, i) {
             <button class="start-btn">Start</button>
             <button class="pause-btn">Pause</button>
             <button class="stop-btn">Stop</button>`
-
-        // startStopBtn.appendChild(timers)
 
         let min = 0
         let sec = 0
@@ -101,25 +98,39 @@ function createlist(getDate, getTag, getDescription, getName, sNum, i) {
         })
         document.querySelector(".stop-btn").addEventListener("click", () => {
             clearInterval(intervel)
-           let time={
-                hour:hour,
-                min:min,
-                second:sec
+            let time = {
+                hour: hour,
+                min: min,
+                second: sec
             }
-            taskTime.push(time)
+
+            let row = taskRow.children
+            let index = (row[0].innerHTML) - 1
+            let data = dataArray[index]
+            console.log(data);
+
+            let taskTime = data.time
             console.log(taskTime);
-            // minute.innerHTML = "00:"
-            // hours.innerHTML = "00:"
-            // second.innerHTML = "00"
-            active=false
-            if(active==false){
+            taskTime.push(time);
+
+            localStorage.setItem('task', JSON.stringify(dataArray));
+            render(dataArray)
+            console.log(taskTime)
+
+            minute.innerHTML = "00:"
+            hours.innerHTML = "00:"
+            second.innerHTML = "00"
+
+            active = false
+            if (active == false) {
                 startStopBtn.style.display = "none"
-                active=true
+                active = true
             }
 
             min = 0
             sec = 0
             hour = 0
+            
         })
 
         let minute = document.querySelector('.minute')
@@ -160,7 +171,6 @@ function createlist(getDate, getTag, getDescription, getName, sNum, i) {
             }
         }
     })
-
 }
 
 
@@ -174,6 +184,7 @@ export function createLS(getName, getDescription, getTag, getDate) {
             description: getDescription.value,
             tag: getTag.value,
             date: getDate.value,
+            time: []
         }
         let dataArray = JSON.parse(localStorage.getItem('task')) || [];
         dataArray.push(data);
@@ -230,3 +241,4 @@ function render(dataArray) {
             </tr>`
     displayList(dataArray)
 }
+
