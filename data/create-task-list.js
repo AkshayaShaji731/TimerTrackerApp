@@ -1,5 +1,6 @@
 const tableList = document.querySelector('table')
 const task = document.querySelector('.task-list-item')
+let dataArray = JSON.parse(localStorage.getItem('task')) || [];
 
 function createlist(getDate, getTag, getDescription, getName, sNum, i) {
     const taskRow = document.createElement("tr")
@@ -33,18 +34,23 @@ function createlist(getDate, getTag, getDescription, getName, sNum, i) {
 
     editBtn.addEventListener("click", (e) => {
         let row=taskRow.children
-        let nameEl=row[3]
-        let descEl=row[4]
-        let tagEl=row[5]
-
-
-       let nameInput=  prompt("Enter the updated name:",nameEl.innerHTML);
-       let descInput=  prompt("Enter the updated name:",descEl.innerHTML);
-       let tagInput=  prompt("Enter the updated name:",tagEl.innerHTML);
-
-       nameEl.innerHTML=nameInput
-       descEl.innerHTML=descInput
-       tagEl.innerHTML=tagInput
+        let index=(row[0].innerHTML)-1
+        let data=dataArray[index]
+        
+        let nameEl=data.name
+        let descEl=data.description
+        let tagEl=data.tag
+         
+        let nameInput=  prompt("Enter the updated name:",nameEl);
+        let descInput=  prompt("Enter the updated decription:",descEl);
+        let tagInput=  prompt("Enter the updated tag:",tagEl);
+ 
+        data.name=nameInput
+        data.description=descInput
+        data.tag=tagInput
+        
+        localStorage.setItem('task', JSON.stringify(dataArray));
+        render(dataArray)
 
     })
 
