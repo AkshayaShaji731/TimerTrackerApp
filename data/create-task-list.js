@@ -1,201 +1,89 @@
-const displayTaskNo = document.querySelector('.task-num')
-const displayDate = document.querySelector('.task-date')
-const displayTaskName = document.querySelector('.task-name')
-const displayTaskDesc = document.querySelector('.task-description')
-const displayTaskTag = document.querySelector('.task-tag')
-// const displayTask=document.querySelector('.display-task')
-const displayBtn = document.querySelector('.task-btn')
+const tableList=document.querySelector('table')
+function createlist(getDate,getTag,getDescription,getName,sNum,i){
+    const taskRow=document.createElement("tr")
+    taskRow.innerHTML=`
+     <td>${sNum}</td>
+     <td>${getDate}</td>
+     <td>---</td>
+     <td>${getName}</td>
+     <td>${getDescription}</td>
+     <td>${getTag}</td>
+     <td>
+     <button class="delete-btn">Delete</button>
+     <button>edit</button>
+     <button>Timer</button>
+     </td>`
+    tableList.appendChild(taskRow)
+    const deleteBtn=taskRow.querySelector('.delete-btn')
+    deleteBtn.addEventListener("click",(e)=>{
+       taskRow.remove()
 
-
-export function createLS(getName, getDescription, getTag, getDate) {
-
-    const name = getName.value
-    const date = getDate.value
-    const description = getDescription.value
-    const tag = getTag.value
-
-
-    if(name=='' && date==''){
-        alert("enter")
-    }
-    else{
-        let data = {
-            name: name,
-            description: description,
-            tag: tag,
-            date: date
-        }
-        let dataArray = JSON.parse(localStorage.getItem('task')) || [];
-        dataArray.push(data);
-    
+       let dataArray = JSON.parse(localStorage.getItem('task')) || [];
+        dataArray.splice(i, 1); 
         localStorage.setItem('task', JSON.stringify(dataArray));
-    }
-}
-let sNum = 1
-export function taskNumber() {
-    const taskNum = document.createElement("div")
-    taskNum.classList.add("t-num")
-    taskNum.innerHTML = sNum;
-    sNum++
-    displayTaskNo.appendChild(taskNum)
-}
-
-export function taskDate(getDate) {
-    const date = getDate
-    const tDate = document.createElement("div")
-    tDate.classList.add('t-date')
-    tDate.innerHTML = date
-    displayDate.appendChild(tDate);
-    // getDate.value = ""
-
-}
-
-export function taskName(getName) {
-    const name = getName
-
-    const tName = document.createElement("div")
-    tName.classList.add("t-name")
-    tName.innerHTML = name
-    displayTaskName.appendChild(tName)
-    // getName.value = ""
-}
-
-export function taskDsecription(getDescription) {
-    const description = getDescription
-    if (description == '') {
-        const taskDec = document.createElement("div")
-        taskDec.classList.add('t-des')
-        taskDec.innerHTML = "--"
-        displayTaskDesc.appendChild(taskDec)
-    }
-    else {
-        const taskDec = document.createElement("div")
-        taskDec.classList.add('t-des')
-        taskDec.innerHTML = description
-        displayTaskDesc.appendChild(taskDec)
-    }
-    // getDescription.value = ""
-}
-
-export function taskTag(getTag) {
-    const tag = getTag
-    if (tag == '') {
-        const tTag = document.createElement("div")
-        tTag.classList.add("t-tag")
-        tTag.innerHTML = "--"
-        displayTaskTag.appendChild(tTag)
-    }
-    else {
-        {
-            const tTag = document.createElement("div")
-            tTag.classList.add("t-tag")
-            tTag.innerHTML = tag
-            displayTaskTag.appendChild(tTag)
-        }
-    }
-    // getTag.value = ""
-}
-export function createActionBtn() {
-    const taskBtn = document.createElement("div")
-
-    taskBtn.innerHTML = `
-         <button class="del-btn">delete</button>
-         <button>edit</button>
-        <button class="timer">Timer</button>
-         <div class="start-stop-btn"></div>
-    `
-    displayBtn.appendChild(taskBtn)
-
-
-    const timerEl = document.querySelector('.timer')
-    const startStopBtn = document.querySelector('.start-stop-btn')
-
-    timerEl.addEventListener('click', () => {
-        startStopBtn.classList.add("start-stop-btn-cs")
-        startStopBtn.innerHTML = `
-            <div class="display-time">
-
-            <span class="hour">00:</span>
-            <span class="minute">00:</span>
-            <span class="second">00</span>
-
-            </div>
-            <button class="start-btn">Start</button>
-            <button class="pause-btn">Pause</button>
-            <button class="stop-btn">Stop</button>`
-        let min = 0
-        let sec = 0
-        let hour = 0
-        var intervel;
-        let pause = "true"
-
-        document.querySelector('.start-btn').addEventListener("click", () => {
-            clearInterval(intervel)
-            intervel = setInterval(startTime, 100)
-        })
-
-        document.querySelector('.pause-btn').addEventListener('click', () => {
-            if (pause == "true") {
-                clearInterval(intervel)
-                pause = "false"
-            }
-            else {
-                intervel = setInterval(startTime, 10)
-                pause = "true"
-            }
-
-        })
-
-        document.querySelector(".stop-btn").addEventListener("click", () => {
-            clearInterval(intervel)
-            minute.innerHTML = "00:"
-            hours.innerHTML = "00:"
-            second.innerHTML = "00"
-            min = 0
-            sec = 0
-            hour = 0
-        })
-
-        let minute = document.querySelector('.minute')
-        let second = document.querySelector('.second')
-        let hours = document.querySelector('.hour')
-        function startTime() {
-            sec++
-            if (sec < 60) {
-                if (sec <= 9) {
-
-                    second.innerHTML = "0" + sec
-
-                }
-                else if (sec > 9) {
-                    second.innerHTML = sec
-                }
-            }
-            else if (sec > 60 && min < 59) {
-                min += 1
-                if (min <= 9) {
-                    minute.innerHTML = "0" + min + ":"
-                }
-                else {
-                    minute.innerHTML = min + ":"
-                }
-                sec = 0
-            }
-            else if (sec > 60 && min >= 59) {
-                hour += 1
-                if (hour <= 9) {
-                    hours.innerHTML = "0" + hour + ":"
-                }
-                else {
-                    hours.innerHTML = hour + ":"
-                }
-                sec = 0
-                min = 0
-            }
-        }
     })
 
 }
 
+export function createLS(getName, getDescription, getTag, getDate) {
+    if (getDate.value == '' || getName.value == '') {
+        alert("Enter the Date and Name")
+    }
+    else {
+        let data = {
+            name: getName.value,
+            description: getDescription.value,
+            tag: getTag.value,
+            date: getDate.value,
+        }
+        let dataArray = JSON.parse(localStorage.getItem('task')) || [];
+        dataArray.push(data);
 
+        localStorage.setItem('task', JSON.stringify(dataArray));
+        dataArray = JSON.parse(localStorage.getItem('task') || [])
+       
+        render(dataArray)
+    }
+    getName.value = ""
+    getDescription.value = ""
+    getTag.value = ""
+    getDate.value = ""
+}
+export function displayList(dataArray) {
+    for (let i = 0; i < dataArray.length; i++) {
+        let sNum = i + 1
+        let getDate = dataArray[i].date
+        let getName = dataArray[i].name
+        let getDescription = dataArray[i].description
+        let getTag = dataArray[i].tag
 
+        if(getDescription==''){
+            getDescription="---"
+        }
+        else{
+         getDescription = dataArray[i].description
+        }
+        if(getTag==''){
+            getTag="--"
+        }
+        else{
+            getTag = dataArray[i].tag
+
+        }
+
+         createlist(getDate,getTag,getDescription,getName,sNum,i)
+    }
+}
+function render(dataArray){
+    tableList.innerHTML=`
+     <tr>
+              <th>s.no</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>TaskName</th>
+              <th>Task Description</th>
+              <th>Task Tag</th>
+              <th></th>
+            </tr>`
+    displayList(dataArray)
+}

@@ -1,12 +1,10 @@
 import { createNavBar } from "../data/navbar.js"
-import { taskNumber,taskName,taskDsecription,taskTag,taskDate,createActionBtn,createLS } from "../data/create-task-list.js"
+import {createLS ,displayList} from "../data/create-task-list.js"
 
 
 const dateEl = document.querySelector(".date")
 const taskBtn = document.querySelector('.add-task-btn')
 const task = document.querySelector('.task-list-item')
-// const taskContainer=document.querySelector('.main-container')
-// const createBtn=document.querySelector('.task-create-btn')
 
 let active = "active"
 
@@ -15,7 +13,7 @@ getDate()
 createNavBar()
 
 let dataArray = JSON.parse(localStorage.getItem('task')) || [];
-displayList(taskNumber,taskName,taskDsecription,taskTag,taskDate,createActionBtn)
+displayList(dataArray)
 
 taskBtn.addEventListener('click', () => {
     createTask()
@@ -48,7 +46,7 @@ function createTask() {
         const getTag = document.getElementById('tag')
 
         createBtn.addEventListener('click', () => {
-           createTaskList(getName, getDescription, getTag,getDate)
+            createLS(getName, getDescription, getTag, getDate)
         })
     }
     else {
@@ -56,74 +54,4 @@ function createTask() {
         active = "active"
     }
 }
-function createTaskList(getName, getDescription, getTag,getDate){
-    createLS(getName, getDescription, getTag,getDate)
-    createTask()
-}
-function displayList(taskNumber,taskName,taskDsecription,taskTag,taskDate,createActionBtn){
-    for (let i = 0; i < dataArray.length; i++) {
-        let getDate = dataArray[i].date
-        let getName = dataArray[i].name
-        let getDescription = dataArray[i].description
-        let getTag = dataArray[i].tag
-        taskNumber();
-        taskDate(getDate);
-        taskDsecription(getDescription);
-        taskName(getName)
-        taskTag(getTag)
-        createActionBtn()  
-    }
-}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function pageChange() {
-//     navEl.forEach(e => {
-//         const ulEl=e
-//         const liTag = ulEl.childNodes
-//         let li=[]
-//         for (i = 0;i<liTag.length;i++){
-//            if(i%2!=0){
-//              li.push(liTag[i].className)
-//            }
-//         }
-//         let liClassName=li
-
-//     })
-// }
-// pageChange
