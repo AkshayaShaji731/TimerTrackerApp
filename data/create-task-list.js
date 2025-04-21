@@ -2,7 +2,7 @@ const tableList = document.querySelector('table')
 const task = document.querySelector('.task-list-item')
 let dataArray = JSON.parse(localStorage.getItem('task')) || [];
 
-function createlist(getDate, getTag, getDescription, getName, sNum, i) {
+function createlist(getDate, getTag, getDescription, getName, sNum, i, getTime) {
     const taskRow = document.createElement("tr")
     taskRow.innerHTML = `
      <td id="s-no">${sNum}</td>
@@ -11,7 +11,8 @@ function createlist(getDate, getTag, getDescription, getName, sNum, i) {
      <td id="t-name">${getName}</td>
      <td id="t-desc">${getDescription}</td>
      <td id="t-tag">${getTag}</td>
-     <td>
+     <td id="timer"></td>
+     <td id="t-btn">
      <button class="delete-btn">Delete</button>
      <button class="edit-btn">edit</button>
      <button class="timer-btn">Timer</button>
@@ -23,6 +24,13 @@ function createlist(getDate, getTag, getDescription, getName, sNum, i) {
     const editBtn = taskRow.querySelector('.edit-btn')
     const timerEl = taskRow.querySelector('.timer-btn')
     const startStopBtn = taskRow.querySelector('.start-stop-btn')
+    const displayTimer = taskRow.querySelector("#timer")
+    if (getTime.hour == undefined || getTime.min == undefined || getTime.sec == undefined) {
+        displayTimer.innerHTML = "00:00:00"
+    }
+    else {
+        displayTimer.innerHTML = getTime.hour + ":" + getTime.min + ":" + getTime.sec
+    }
 
     deleteBtn.addEventListener("click", () => {
         taskRow.remove()
@@ -107,15 +115,14 @@ function createlist(getDate, getTag, getDescription, getName, sNum, i) {
             let row = taskRow.children
             let index = (row[0].innerHTML) - 1
             let data = dataArray[index]
-            console.log(data);
 
             let taskTime = data.time
-            console.log(taskTime);
             taskTime.push(time);
+            let totalTime = total(taskTime)
+            data.totalTaskTime = totalTime
 
             localStorage.setItem('task', JSON.stringify(dataArray));
             render(dataArray)
-            console.log(taskTime)
 
             minute.innerHTML = "00:"
             hours.innerHTML = "00:"
@@ -123,14 +130,14 @@ function createlist(getDate, getTag, getDescription, getName, sNum, i) {
 
             active = false
             if (active == false) {
-                startStopBtn.style.display = "none"
+                startStopBtn.style.display = "block"
                 active = true
             }
 
             min = 0
             sec = 0
             hour = 0
-            
+
         })
 
         let minute = document.querySelector('.minute')
@@ -184,20 +191,22 @@ export function createLS(getName, getDescription, getTag, getDate) {
             description: getDescription.value,
             tag: getTag.value,
             date: getDate.value,
-            time: []
+            time: [],
+            totalTaskTime: ""
+
         }
         let dataArray = JSON.parse(localStorage.getItem('task')) || [];
         dataArray.push(data);
 
         localStorage.setItem('task', JSON.stringify(dataArray));
         dataArray = JSON.parse(localStorage.getItem('task') || [])
-
         render(dataArray)
     }
     getName.value = ""
     getDescription.value = ""
     getTag.value = ""
     getDate.value = ""
+    window.location.reload()
 }
 
 
@@ -208,6 +217,9 @@ export function displayList(dataArray) {
         let getName = dataArray[i].name
         let getDescription = dataArray[i].description
         let getTag = dataArray[i].tag
+
+        let getTime = dataArray[i].totalTaskTime
+        let timeArray = dataArray[i].time
 
         if (getDescription == '') {
             getDescription = "---"
@@ -223,7 +235,8 @@ export function displayList(dataArray) {
 
         }
 
-        createlist(getDate, getTag, getDescription, getName, sNum, i)
+
+        createlist(getDate, getTag, getDescription, getName, sNum, i, getTime)
     }
 }
 
@@ -231,14 +244,55 @@ export function displayList(dataArray) {
 function render(dataArray) {
     tableList.innerHTML = `
      <tr>
-              <th>s.no</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-              <th>TaskName</th>
-              <th>Task Description</th>
-              <th>Task Tag</th>
-              <th></th>
+              <th id="t-num">s.no</th>
+              <th id="t-date">Start Date</th>
+              <th id="t-date">End Date</th>
+              <th id="t-name">TaskName</th>
+              <th id="t-des">Task Description</th>
+              <th id="t-tag">Task Tag</th>
+              <th id="t-time">Time<th>
+              <th id="t-btn"></th>
             </tr>`
     displayList(dataArray)
 }
 
+function total(data) {
+    let array = data
+    let totalHour = 0
+    let totalMin = 0
+    let totalSec = 0
+    for (let i = 0; i < array.length; i++) {
+        let timeArray = array[i]
+        let timehour = timeArray.hour
+        let timemin = timeArray.min
+        let timeSec = timeArray.second
+        totalHour += timehour
+        totalMin += timemin
+        totalSec += timeSec;
+        if (totalSec >= 60) {
+            totalMin += Math.floor(totalSec / 60)
+            totalSec = totalSec % 60
+        }
+        if (totalMin >= 60) {
+            totalHour += Math.floor(totalMin / 60)
+            totalMin = totalMin % 60
+        }
+    }
+    let totalTaskTIme
+    if(totalHour<=9){
+        totalHour="0"+totalHour
+    }
+    if(totalMin<=9){
+        totalMin="0"+totalMin
+    }
+    if(totalSec<=9){
+        totalHour="0"+totalSec
+    }
+    
+        totalTaskTIme = {
+            hour: totalHour,
+            min: totalMin,
+            sec: totalSec
+    }
+    return totalTaskTIme
+}

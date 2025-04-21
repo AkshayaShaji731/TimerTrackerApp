@@ -25,7 +25,7 @@ function getDate() {
 }
 
 
-function createTask() {
+export function createTask() {
     if (active == "active") {
         task.innerHTML = `
         <label for="date">Enter the Date</label>
