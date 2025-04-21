@@ -38,6 +38,7 @@ function createlist(getDate, getTag, getDescription, getName, sNum, i, getTime) 
         let dataArray = JSON.parse(localStorage.getItem('task')) || [];
         dataArray.splice(i, 1);
         localStorage.setItem('task', JSON.stringify(dataArray));
+        render(dataArray)
     })
 
     editBtn.addEventListener("click", (e) => {
@@ -206,7 +207,7 @@ export function createLS(getName, getDescription, getTag, getDate) {
     getDescription.value = ""
     getTag.value = ""
     getDate.value = ""
-    window.location.reload()
+    // window.location.reload()
 }
 
 
