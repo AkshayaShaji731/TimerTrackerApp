@@ -1,16 +1,22 @@
-import { createNavBar } from "../data/navbar.js"
-import {createLS ,displayList} from "../data/create-task-list.js"
+import { createNavBar,navBarMob } from "../data/navbar.js"
+import {createLS ,displayList} from "../data/create-task-list-table.js"
 
 
 const dateEl = document.querySelector(".date")
 const taskBtn = document.querySelector('.add-task-btn')
 const task = document.querySelector('.task-list-item')
+const displaylistCon=document.querySelector('.display-content')
+
+// function displayContent(){
+//     displaylistCon.innerHTML=``
+// }
 
 let active = "active"
 
 
 getDate()
 createNavBar()
+navBarMob()
 
 let dataArray = JSON.parse(localStorage.getItem('task')) || [];
 displayList(dataArray)
@@ -54,4 +60,6 @@ export function createTask() {
         active = "active"
     }
 }
+
+
 

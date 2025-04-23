@@ -1,7 +1,9 @@
-import { createNavBar } from "../data/navbar.js";
+import { createNavBar,navBarMob } from "../data/navbar.js";
 const tableList = document.querySelector('table')
+const taskList=document.querySelector('.display-task')
 
 createNavBar()
+navBarMob()
 let dataArray = JSON.parse(localStorage.getItem('task')) || [];
 
 
@@ -52,9 +54,49 @@ function historyDisplay() {
 
         }
         createHistory(getDate, getTag, getDescription, getName, sNum, i, getTime)
+        createHistoryMob(getDate, getTag, getDescription, getName, sNum, i, getTime)
     }
 }
+function createHistoryMob(getDate, getTag, getDescription, getName, sNum, i, getTime){
+    const taskDiv=document.createElement("div");
+    taskDiv.classList.add('task-div')
+    taskDiv.innerHTML=`
+    <div class="date-name">
+      <h3>${sNum}.</h3> 
+      <h3> ${getName}</h3>
+        <p>${getDate}</p>
+    </div>    
+    <p>${getDescription}</p>
+   <div class="btn-time">
+    <div id="btn">
+    <button class="delete-btn">Delete</button>
+     </div>
+      <p id="timer"></p>
+    </div> `
+    
+    taskList.appendChild(taskDiv)
 
+    const displayTimer = taskDiv.querySelector("#timer")
+    const deleteBtn = taskDiv.querySelector('.delete-btn')
+
+    if (getTime.hour == undefined || getTime.min == undefined || getTime.sec == undefined) {
+        displayTimer.innerHTML = "00:00:00"
+    }
+    else {
+        displayTimer.innerHTML = getTime.hour + ":" + getTime.min + ":" + getTime.sec
+    }
+
+
+    deleteBtn.addEventListener("click", (e) => {
+        taskDiv.remove()
+
+        let historyArray = JSON.parse(localStorage.getItem('history') )|| [];
+        historyArray.splice(i, 1);
+        localStorage.setItem('history', JSON.stringify(historyArray));
+        // reload()
+        
+    })
+}
 function createHistory(getDate, getTag, getDescription, getName, sNum, i, getTime) {
     const taskRow = document.createElement("tr")
     taskRow.innerHTML = `
@@ -92,17 +134,17 @@ function createHistory(getDate, getTag, getDescription, getName, sNum, i, getTim
         
     })
 }
-// function reload(){
-//        tableList.innerHTML = `
-//          <tr>
-//                   <th id="t-num">s.no</th>
-//                   <th id="t-date">Start Date</th>
-//                   <th id="t-date">End Date</th>
-//                   <th id="t-name">TaskName</th>
-//                   <th id="t-des">Task Description</th>
-//                   <th id="t-tag">Task Tag</th>
-//                   <th id="t-time">Time<th>
-//                   <th id="t-btn"></th>
-//                 </tr>`
-//        historyDisplay()
-// }
+function reload(){
+       tableList.innerHTML = `
+         <tr>
+                  <th id="t-num">s.no</th>
+                  <th id="t-date">Start Date</th>
+                  <th id="t-date">End Date</th>
+                  <th id="t-name">TaskName</th>
+                  <th id="t-des">Task Description</th>
+                  <th id="t-tag">Task Tag</th>
+                  <th id="t-time">Time<th>
+                  <th id="t-btn"></th>
+                </tr>`
+       historyDisplay()
+}
