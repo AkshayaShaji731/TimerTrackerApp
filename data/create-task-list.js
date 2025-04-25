@@ -1,4 +1,6 @@
-import { displayList,total } from "./create-task-list-table.js"; 
+import { total } from "./create-task-list-table.js"; 
+import { displayContent } from "./create-task-list-table.js";
+
 const taskTable=document.querySelector(".display-task")
 let dataArray = JSON.parse(localStorage.getItem('task')) || [];
 
@@ -67,8 +69,21 @@ export function createlistMob(getDate, getDescription, getName, sNum, i, getTime
 
     timerEl.addEventListener('click', (e) => {
         let index=sNum-1
-        // console.log(index);
-        // let row = taskDiv.children
+          let time
+      
+              let timeobj=dataArray[index].totalTaskTime
+              if(timeobj==''){
+                  time="00:00:00"
+              }
+              else{
+                   time=timeobj.hour+":"+timeobj.min+":"+timeobj.sec
+              }
+          
+              let name=dataArray[index].name
+              let desc=dataArray[index].description
+              let tag=dataArray[index].tag
+              let date=dataArray[index].date
+              displayContent(time, name, desc, tag, date)
     
         let active = true
         if (active == true) {
