@@ -1,5 +1,5 @@
 import { total } from "./create-task-list-table.js"; 
-import { displayContent } from "./create-task-list-table.js";
+import { displayContent } from "./display-list-content.js";
 
 const taskTable=document.querySelector(".display-task")
 let dataArray = JSON.parse(localStorage.getItem('task')) || [];
