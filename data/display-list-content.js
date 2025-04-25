@@ -1,14 +1,16 @@
-import { render ,total} from "./create-task-list-table.js";
+import { render, total } from "./create-task-list-table.js";
 
 let dataArray = JSON.parse(localStorage.getItem('task')) || [];
 const displaylistCon = document.querySelector('.display-content')
-// const days = document.querySelector('.days')
+const days = document.querySelector('.days')
 const timerCon = document.querySelector(".display-timer")
-let completedArray=JSON.parse(localStorage.getItem('status')) || [];
+const timeslist = document.querySelector(".times")
+let completedArray = JSON.parse(localStorage.getItem('status')) || [];
 
 
 export function displayContent(time, name, desc, tag, date, index, enddate, status) {
     displaylistCon.innerHTML = ` 
+      <h3>Task details</h3>
        <table>
          <tr>
            <td>Start Date </td>
@@ -54,22 +56,18 @@ export function displayContent(time, name, desc, tag, date, index, enddate, stat
         dataArray[index].endDate = endDate
         dataArray[index].status = "completed"
         localStorage.setItem('task', JSON.stringify(dataArray));
-        for(let i=0;i<dataArray.length;i++){
-            let status=dataArray[i].status
-            if(status=="completed"){
+        for (let i = 0; i < dataArray.length; i++) {
+            let status = dataArray[i].status
+            if (status == "completed") {
                 completedArray.push(dataArray[i])
                 localStorage.setItem('status', JSON.stringify(completedArray));
             }
         }
         console.log(dataArray)
         render(dataArray)
-        //  window.location.reload()
     })
     if (status == "completed") {
         document.querySelector('.submit').remove()
-        console.log("hlo")
-        // window.location.reload()
-        // document.querySelector('.display-timer').remove()
 
     }
 }
@@ -99,7 +97,7 @@ export function timer(index) {
      <button id="d-pause-btn">Pause</button>
      <button id="d-stop-btn">Stop</button>
    </div>`
-    
+
 
 
     let min = 0
@@ -110,6 +108,19 @@ export function timer(index) {
     document.querySelector('#d-start-btn').addEventListener("click", () => {
         clearInterval(interval)
         interval = setInterval(startTime, 100)
+
+        let data = dataArray[index]
+
+        let nowTime = new Date().toLocaleTimeString();
+        let currentTime = data.currentTime
+        currentTime.push(nowTime)
+
+        let today=new Date().toISOString().split('T')[0];
+        let currentDate=data.currentDate
+        currentDate.push(today)
+        console.log(today)
+
+        localStorage.setItem('task', JSON.stringify(dataArray));
     })
     document.querySelector('#d-pause-btn').addEventListener('click', () => {
         if (pause == "true") {
@@ -136,8 +147,10 @@ export function timer(index) {
 
         let taskTime = data.time
         taskTime.push(time);
+
         let totalTime = total(taskTime)
         data.totalTaskTime = totalTime
+
 
         localStorage.setItem('task', JSON.stringify(dataArray));
         render(dataArray)
@@ -189,4 +202,30 @@ export function timer(index) {
         }
     }
 
+}
+
+export function listOfTime(index) {
+    if (dataArray.length >= 1) {
+        timeslist.innerHTML=" "
+        let list = dataArray[index].time
+        let nowTime = dataArray[index].currentTime
+        let today=dataArray[index].currentDate
+        if (nowTime.length >= 1) {
+            document.getElementById("time-default").style.display = "none"
+        }
+        for (let i = 0; i < list.length; i++) {
+            let currentDate=today[i]
+            let currentTime = nowTime[i]
+            let timeData = list[i].hour + ":" + list[i].min + ":" + list[i].second
+            let times = document.createElement("tr")
+            times.innerHTML = `
+               <tr>
+                <td>${currentDate}</td>
+                <td>${currentTime}</td>
+                <td>${timeData}</td>
+               </tr>`
+
+            timeslist.appendChild(times)   
+        }
+    }
 }

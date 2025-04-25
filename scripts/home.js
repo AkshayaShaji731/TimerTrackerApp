@@ -1,7 +1,7 @@
 import { createNavBar, navBarMob } from "../data/navbar.js"
 import { createLS, createlist, render } from "../data/create-task-list-table.js"
 import { createlistMob } from "../data/create-task-list.js"
-import { displayContent,timer } from "../data/display-list-content.js"
+import { displayContent,timer,listOfTime} from "../data/display-list-content.js"
 
 const dateEl = document.querySelector(".date")
 const taskBtn = document.querySelector('.add-task-btn')
@@ -102,6 +102,7 @@ export function displayList(dataArray) {
     }
     // numberOfDays(numDays)
     timer(index, timeobj, status)
+    listOfTime(index)
     for (let i = 0; i < dataArray.length; i++) {
         let sNum = i + 1
         let getDate = dataArray[i].date
