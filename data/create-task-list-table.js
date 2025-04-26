@@ -1,5 +1,5 @@
 import { displayList } from "../scripts/home.js";
-import { displayContent,timer} from "./display-list-content.js";
+import { displayContent,timer,listOfTime} from "./display-list-content.js";
 const tableList = document.querySelector('.task-table')
 const task = document.querySelector('.task-list-item')
 
@@ -100,6 +100,7 @@ export function createlist(getDate, getTag, getDescription, getName, sNum, i, ge
         let date = dataArray[index].date
         let status=dataArray[index].status
         let endDate=dataArray[index].endDate
+        listOfTime(index)
         displayContent(time, name, desc, tag, date,endDate,status)
 
         timer(index, timeobj)
@@ -198,3 +199,4 @@ export function total(data) {
     }
     return totalTaskTIme
 }
+

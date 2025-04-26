@@ -1,3 +1,4 @@
+import { displayList } from "../scripts/home.js";
 import { render, total } from "./create-task-list-table.js";
 
 let dataArray = JSON.parse(localStorage.getItem('task')) || [];
@@ -119,7 +120,6 @@ export function timer(index) {
         let currentDate=data.currentDate
         currentDate.push(today)
         console.log(today)
-
         localStorage.setItem('task', JSON.stringify(dataArray));
     })
     document.querySelector('#d-pause-btn').addEventListener('click', () => {
@@ -134,6 +134,7 @@ export function timer(index) {
 
     })
     document.querySelector("#d-stop-btn").addEventListener("click", (e) => {
+        listOfTime(index)
         render(dataArray)
         e.preventDefault()
         clearInterval(interval)
@@ -207,6 +208,7 @@ export function timer(index) {
 export function listOfTime(index) {
     if (dataArray.length >= 1) {
         timeslist.innerHTML=" "
+        console.log(dataArray.time)
         let list = dataArray[index].time
         let nowTime = dataArray[index].currentTime
         let today=dataArray[index].currentDate
