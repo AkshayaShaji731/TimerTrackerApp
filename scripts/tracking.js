@@ -1,7 +1,6 @@
 import { createNavBar, navBarMob } from "../data/navbar.js";
 createNavBar()
 navBarMob()
-// import { listOfTime,numberOfDays } from "../data/display-list-content.js";
 
 
 let dataArray = JSON.parse(localStorage.getItem('task')) || [];
@@ -13,8 +12,8 @@ const displayPendingCon = document.querySelector('.display-pending')
 const displayCompletedCon=document.querySelector('.display-completed')
 const days = document.querySelector('.days')
 const timerCon = document.querySelector(".display-timer")
-const timeslist = document.querySelector(".times")
-let display = "active"
+const timespending = document.querySelector(".times-pending")
+const timescompleted=document.querySelector(".times-completed")
 displayTracking()
 function displayTracking() {
     for (let i = 0; i < dataArray.length; i++) {
@@ -92,7 +91,10 @@ function pendingTask(sNum, getDate, getName, endDate, getTime, getDescription, g
     taskRow.querySelector(".details").addEventListener("click", () => {
 
         document.querySelector(".display-pending-con").style.display = "block"
+        let array=dataArray[sNum-1]
         displayContentTrack(sNum, getDate, getName, endDate, time, getDescription, getTag, getStatus,displayPendingCon)
+        timercloseData(array,timespending)
+        getNumDays(array)
     }
     )
 
@@ -120,7 +122,10 @@ function completedTask(sNum, getDate, getName, endDate, getTime, getDescription,
     taskRow.querySelector(".details").addEventListener("click", () => {
 
         document.querySelector(".display-completed-con").style.display = "block"
+        let array=completedArray[sNum-1]
         displayContentTrack(sNum, getDate, getName, endDate, time, getDescription, getTag, getStatus,displayCompletedCon)
+        timercloseData(array,timescompleted)
+        getNumDays(array)
     }
     )
 
@@ -166,5 +171,59 @@ function displayContentTrack(index, date, name, enddate, time, desc, tag, status
            <td class="status-text">${status}</td>
          </tr>
        </table>`
+}
+
+function timercloseData(index,timeslist){
+    timeslist.innerHTML=""
+    let  time=index.time
+    let today=index.currentDate
+    let nowTime=index.currentTime
+    if (nowTime.length >= 1) {
+        document.getElementById("time-default").style.display = "none"
+    }
+    for (let i = 0; i < time.length; i++) {
+        let currentDate=today[i]
+        let currentTime = nowTime[i]
+        let timeData = time[i].hour + ":" + time[i].min + ":" + time[i].second
+        let times = document.createElement("tr")
+        times.innerHTML = `
+           <tr>
+            <td>${currentDate}</td>
+            <td>${currentTime}</td>
+            <td>${timeData}</td>
+           </tr>`
+
+        timeslist.appendChild(times)   
+    }
+}
+function getNumDays(data){
+    let num=0;
+    let count
+    let days=data.currentDate
+    for(let i=0;i<days.length;i++){
+        count=1
+        let day=days[num]
+        if(day==days[i]){
+            continue
+        }
+        else{
+            count++
+        }
+    }
+    numberOfDays(count)
+}
+
+function numberOfDays(numDays) {
+    if (numDays == "") {
+        days.innerHTML = `
+        <h3>0</h3>
+        <p>Number of days</p>`
+    }
+    else {
+        days.innerHTML = `
+        <h3>${numDays}</h3>
+        <p>Number of days</p>`
+    }
+
 }
 
