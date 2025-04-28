@@ -73,8 +73,8 @@ function pendingTask(sNum, getDate, getName, endDate, getTime, getDescription, g
     taskRow.innerHTML = `
      <td id="s-no">${sNum}</td>
      <td id="t-date">${getDate}</td>
-     <td id="t-name">${getName}</td>
      <td id="t-desc">${endDate}</td>
+     <td id="t-name">${getName}</td>
      <td id="timer"></td>
      <td id="t-btn">
      <button class="details">Details</button>

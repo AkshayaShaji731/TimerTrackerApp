@@ -133,10 +133,9 @@ export function displayList(dataArray) {
             getTag = dataArray[i].tag
 
         }
-
+        listOfTime(index)
         createlist(getDate, getTag, getDescription, getName, sNum, i, getTime, getEndDate, getStatus)
         createlistMob(getDate, getDescription, getName, sNum, i, getTime)
-        listOfTime(index)
     }
 }
 

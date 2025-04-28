@@ -1,4 +1,3 @@
-import { displayList } from "../scripts/home.js";
 import { render, total } from "./create-task-list-table.js";
 
 let dataArray = JSON.parse(localStorage.getItem('task')) || [];
@@ -116,8 +115,8 @@ export function timer(index) {
         let currentTime = data.currentTime
         currentTime.push(nowTime)
 
-        let today=new Date().toISOString().split('T')[0];
-        let currentDate=data.currentDate
+        let today = new Date().toISOString().split('T')[0];
+        let currentDate = data.currentDate
         currentDate.push(today)
         console.log(today)
         localStorage.setItem('task', JSON.stringify(dataArray));
@@ -206,9 +205,9 @@ export function timer(index) {
 }
 
 export function listOfTime(index) {
-    if (dataArray.length >= 1) {
-        timeslist.innerHTML=" "
-        console.log(dataArray.time)
+    if (dataArray.length >= 1 && dataArray[index]) {
+        timeslist.innerHTML = " "
+        // console.log(dataArray[index].time)
         let list = dataArray[index].time
         let nowTime = dataArray[index].currentTime
         let today=dataArray[index].currentDate
@@ -216,7 +215,7 @@ export function listOfTime(index) {
             document.getElementById("time-default").style.display = "none"
         }
         for (let i = 0; i < list.length; i++) {
-            let currentDate=today[i]
+            let currentDate = today[i]
             let currentTime = nowTime[i]
             let timeData = list[i].hour + ":" + list[i].min + ":" + list[i].second
             let times = document.createElement("tr")
@@ -227,7 +226,7 @@ export function listOfTime(index) {
                 <td>${timeData}</td>
                </tr>`
 
-            timeslist.appendChild(times)   
+            timeslist.appendChild(times)
         }
     }
 }
