@@ -124,6 +124,8 @@ export function createLS(getName, getDescription, getTag, getDate) {
             currentTime: [],
             currentDate: [],
             totalTaskTime: "",
+            dateTotal:[],
+            dailyTotalTime:[],
             status: " Not Completed"
 
         }
@@ -200,6 +202,9 @@ export function total(data) {
     }
     return totalTaskTIme
 }
+
+
+// daily()
 // function daily() {
 //     let array = []
 //     let date
@@ -207,6 +212,7 @@ export function total(data) {
 //     let hour
 //     let min
 //     let sec
+//     let currentDate = new Date().toISOString().split('T')[0];
 //     let total = {
 //         hour: 0,
 //         minute: 0,
@@ -214,152 +220,96 @@ export function total(data) {
 //     }
 
 //     for (let i = 0; i < dataArray.length; i++) {
-//         // let num = 0
 //         date = dataArray[i].currentDate
-//         // time = dataArray[i].time
-//       let  currentDate=new Date().toISOString().split('T')[0];
-//         array.push(dailyTask(dataArray[i]))
-//         console.log()
+//             let taskArray = dailyTask(dataArray[i]);
+//             array.push(taskArray);
+//     }
 
-//         for (let j = 0; j < array.length; j++) {
-//             // console.log(array.length)
-//             // for(let inarr=0;inarr<;inarr++)
-//             // hour = array[j].hour
-//             // // console.log(array[j])
-//             // min  = array[j].min
-//             // sec  = array[j].second
-//             if (date[j] == currentDate) {
-//                 total.hour += hour
-//                 total.minute += min
-//                 total.seconds += sec
-//                 if (total.seconds >= 59) {
-//                     total.minute += Math.floor(total.seconds / 60)
-//                     total.seconds = total.seconds % 60
+//     for (let j = 0; j < array.length; j++) {
+//         let currentTask = array[j];
+//         for (let k = 0; k < currentTask.length; k++) {
+//             let task = currentTask[k];  
+//             if (task.date === currentDate) {
+//                 hour = task.hour;
+//                 min = task.minute;
+//                 sec = task.seconds;
+
+//                 total.hour += hour;
+//                 total.minute += min;
+//                 total.seconds += sec;
+
+//                 if (total.seconds >= 60) {
+//                     total.minute += Math.floor(total.seconds / 60);
+//                     total.seconds = total.seconds % 60;
 //                 }
 
-//                 if (total.minute >= 59) {
-//                     total.hour += Math.floor(total.minute / 60)
-//                     total.minute = total.minute % 60
+//                 if (total.minute >= 60) {
+//                     total.hour += Math.floor(total.minute / 60);
+//                     total.minute = total.minute % 60;
 //                 }
 //             }
-//             // else {
-//             //     continue
-//             // }
 //         }
 //     }
-//     console.log(total)
-//     console.log(array)
+
+//     console.log(total);  
+//     console.log(array); 
 // }
-daily()
-function daily() {
-    let array = []
-    let date
-    let time
-    let hour
-    let min
-    let sec
-    let currentDate = new Date().toISOString().split('T')[0];
-    let total = {
-        hour: 0,
-        minute: 0,
-        seconds: 0
-    }
-
-    for (let i = 0; i < dataArray.length; i++) {
-        // let num = 0
-        date = dataArray[i].currentDate
-            let taskArray = dailyTask(dataArray[i]);
-            array.push(taskArray);
-    }
-
-    for (let j = 0; j < array.length; j++) {
-        let currentTask = array[j]; // Each item in the array is the result of dailyTask
-        for (let k = 0; k < currentTask.length; k++) {
-            let task = currentTask[k];  // Get the individual task
-            // Only add time if the task date matches the current date
-            if (task.date === currentDate) {
-                hour = task.hour;
-                min = task.minute;
-                sec = task.seconds;
-
-                // Add up the hours, minutes, and seconds
-                total.hour += hour;
-                total.minute += min;
-                total.seconds += sec;
-
-                // Normalize seconds and minutes if necessary
-                if (total.seconds >= 60) {
-                    total.minute += Math.floor(total.seconds / 60);
-                    total.seconds = total.seconds % 60;
-                }
-
-                if (total.minute >= 60) {
-                    total.hour += Math.floor(total.minute / 60);
-                    total.minute = total.minute % 60;
-                }
-            }
-        }
-    }
-
-    console.log(total);  // Log the total time for the current day
-    console.log(array);  // Log the tasks for the current day
-}
 
 
-function dailyTask(dataArray) {
-    let array = []
-    let date
-    let time
-    let hour
-    let min
-    let sec
-    let tasktotal = {
-        date: "",
-        hour: 0,
-        minute: 0,
-        seconds: 0
-    }
-    date = dataArray.currentDate
-    time = dataArray.time
-    // console.log(time)    
-    for (let j = 0; j < time.length; j++) {
+// function dailyTask(dataArray) {
+//     let array = []
+//     let date
+//     let time
+//     let hour
+//     let min
+//     let sec
+//     let tasktotal = {
+//         date: "",
+//         hour: 0,
+//         minute: 0,
+//         seconds: 0
+//     }
+//     date = dataArray.currentDate
+//     time = dataArray.time
+//     // console.log(time)    
+//     for (let j = 0; j < time.length; j++) {
 
-        hour = time[j].hour
-        min = time[j].min
-        sec = time[j].second
+//         hour = time[j].hour
+//         min = time[j].min
+//         sec = time[j].second
 
-        if (date[j] == date[j - 1]) {
-            tasktotal.hour += hour
-            tasktotal.minute += min
-            tasktotal.seconds += sec
-            tasktotal.date = date[j]
-            if (tasktotal.seconds >= 59) {
-                tasktotal.minute += Math.floor(tasktotal.seconds / 60)
-                tasktotal.seconds = tasktotal.seconds % 60
-            }
+//         if (date[j] == date[j - 1]) {
+//             tasktotal.hour += hour
+//             tasktotal.minute += min
+//             tasktotal.seconds += sec
+//             tasktotal.date = date[j]
+//             if (tasktotal.seconds >= 59) {
+//                 tasktotal.minute += Math.floor(tasktotal.seconds / 60)
+//                 tasktotal.seconds = tasktotal.seconds % 60
+//             }
 
-            if (tasktotal.minute >= 59) {
-                tasktotal.hour += Math.floor(tasktotal.minute / 60)
-                tasktotal.minute = tasktotal.minute % 60
-            }
+//             if (tasktotal.minute >= 59) {
+//                 tasktotal.hour += Math.floor(tasktotal.minute / 60)
+//                 tasktotal.minute = tasktotal.minute % 60
+//             }
 
-        }
-        else {
-            if (j > 0) {
-                array.push({ ...tasktotal });
-            }
-            tasktotal = {
-                date: date,
-                hour: hour,
-                minute: min,
-                seconds: sec
-            };
-        }
-    }
-    array.push({ ...tasktotal });
-    // console.log(array)
-    return (array)
-}
-// dailyTask(dataArray)
+//         }
+//         else {
+//             if (j > 0) {
+//                 array.push({ ...tasktotal });
+//             }
+//             tasktotal = {
+//                 date: date,
+//                 hour: hour,
+//                 minute: min,
+//                 seconds: sec
+//             };
+//         }
+//     }
+//     array.push({ ...tasktotal });
+//     // console.log(array)
+//     return (array)
+// }
+// // dailyTask(dataArray)
 
 
