@@ -233,7 +233,6 @@ export function listOfTime(index) {
                 <td>${currentTime}</td>
                 <td>${timeData}</td>
                </tr>`
-
             timeslist.appendChild(times)
         }
     }
@@ -267,7 +266,7 @@ function daily() {
     console.log(dataArray)
         for (let j = 0; j <dataArray.length; j++) {
             let currentTask = dataArray[j].dateTotal;
-            let task=currentTask[0].date
+            let task=array
             console.log(task)
             // for (let k = 0; k < currentTask.length; k++) {
                 // let task = currentTask[k]; 
