@@ -157,9 +157,10 @@ export function timer(index) {
         let totalTime = total(taskTime)
         data.totalTaskTime = totalTime
 
-         
+
         localStorage.setItem('task', JSON.stringify(dataArray));
-        daily()
+
+        // let dailydata=daily()
 
 
         render(dataArray)
@@ -237,8 +238,8 @@ export function listOfTime(index) {
         }
     }
 }
-function daily() {
-    let array 
+export function daily() {
+    let array
     let date
     let time
     let hour
@@ -250,55 +251,57 @@ function daily() {
         minute: 0,
         seconds: 0
     }
-
-    if(dataArray.length>=1){
+    let taskArrayEl
+    if (dataArray.length >= 1) {
         for (let i = 0; i < dataArray.length; i++) {
             date = dataArray[i].currentDate
-                let[taskArray ,taskArrayDate] = dailyTask(dataArray[i],currentDate);
-                dataArray[i].dateTotal={...taskArray}
-                console.log(array)
-                // array.push(taskArray);
-                localStorage.setItem('task', JSON.stringify(dataArray));
-                array=taskArrayDate
-                console.log(array)
-                console.log(dataArray[i].dateTotal)
+            let [taskArray, taskArrayDate] = dailyTask(dataArray[i], currentDate);
+            dataArray[i].dateTotal = taskArray
+            // console.log(array)
+            // array.push(taskArray);
+            localStorage.setItem('task', JSON.stringify(dataArray));
+            array = taskArrayDate
+            // console.log(array)
+            taskArrayEl = taskArray
+            // console.log(dataArray[i].dateTotal)
         }
-    console.log(dataArray)
-        for (let j = 0; j <dataArray.length; j++) {
+        // console.log(dataArray)
+        for (let j = 0; j < dataArray.length; j++) {
             let currentTask = dataArray[j].dateTotal;
-            let task=array
-            console.log(task)
-            // for (let k = 0; k < currentTask.length; k++) {
-                // let task = currentTask[k]; 
-                if (task== currentDate) {
-                    console.log("hlo")
-                    hour = currentTask[0].hour;
-                    min = currentTask[0].minute;
-                    sec = currentTask[0].seconds;
-    
+            //  console.log(currentTask)
+            // let task=array
+
+            // console.log(task)
+            for (let k = 0; k < currentTask.length; k++) {
+                let task = currentTask[k];
+                if (task.date == currentDate) {
+                    // console.log("hlo")
+                    hour = currentTask[k].hour;
+                    min = currentTask[k].minute;
+                    sec = currentTask[k].seconds;
+
                     total.hour += hour;
                     total.minute += min;
                     total.seconds += sec;
-    
+
                     if (total.seconds >= 60) {
                         total.minute += Math.floor(total.seconds / 60);
                         total.seconds = total.seconds % 60;
                     }
-    
+
                     if (total.minute >= 60) {
                         total.hour += Math.floor(total.minute / 60);
                         total.minute = total.minute % 60;
                     }
                 }
-            // }
-        } 
-
+            }
+        }
     }
-    console.log(total);
+    return total
 }
 
 
-function dailyTask(dataArray,currentDate) {
+function dailyTask(dataArray, currentDate) {
     let array = []
     let date
     let time
@@ -306,7 +309,7 @@ function dailyTask(dataArray,currentDate) {
     let min
     let sec
     let tasktotal = {
-        date:currentDate,
+        date: currentDate,
         hour: 0,
         minute: 0,
         seconds: 0
@@ -341,7 +344,7 @@ function dailyTask(dataArray,currentDate) {
                 array.push({ ...tasktotal });
             }
             tasktotal = {
-                date:date,
+                date: date,
                 hour: hour,
                 minute: min,
                 seconds: sec
@@ -349,9 +352,78 @@ function dailyTask(dataArray,currentDate) {
         }
     }
     array.push({ ...tasktotal });
-    let demo= tasktotal.date
-    return [array,demo]
+    let demo = tasktotal.date
+    return [array, demo]
 }
 // dailyTask(dataArray)
 
+function graph() {
+    let graphObj= {
+        date:"",
+        time:""
+    }
+    let dateArray = []
+    let min
+    let sec
+    let hour
+    let total = {
+        hour: 0,
+        minute: 0,
+        seconds: 0
+    }
+   let graphData=[]
+    // console.log(dataArray)
+
+    for (let i = 0; i < dataArray.length; i++) {
+        let demodate = dataArray[i].currentDate
+        let uniq = [...new Set(demodate)]
+        dateArray.push(...uniq)
+        dateArray = [...new Set(dateArray)]
+
+    }
+
+    for(let d=0;d<dateArray.length;d++){
+        for (let k = 0; k < dataArray.length; k++) {
+        
+            let dayTotal = dataArray[k].dateTotal
+    
+                for (let j = 0; j < dayTotal.length; j++) {
+                    let task = dayTotal[j];
+                    // let demo = dayTotal[j]
+                    if (task.date == dateArray[d]) {
+                        hour = task.hour;
+                        min = task.minute;
+                        sec = task.seconds;
+                        total.hour += hour;
+                        total.minute += min;
+                        total.seconds += sec;
+                        if (total.seconds >= 60) {
+                            total.minute += Math.floor(total.seconds / 60);
+                            total.seconds = total.seconds % 60;
+                        }
+    
+                        if (total.minute >= 60) {
+                            total.hour += Math.floor(total.minute / 60);
+                            total.minute = total.minute % 60;
+                        }
+                    }
+                }
+                graphObj.date=dateArray[d]
+                graphObj.time=total
+        }
+        graphData.push(graphObj)
+        graphObj= {
+            date:"",
+            time:""
+        }
+        total = {
+            hour: 0,
+            minute: 0,
+            seconds: 0
+        }
+    }
+    console.log(graphData)
+}
+
+graph()
 
