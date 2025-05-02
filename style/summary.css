@@ -17,9 +17,10 @@ body {
 }
 
 .wrapper {
+    
     display: grid;
     position: relative;
-    /* width: 100%; */
+    width: 100%;
 }
 
 .nav-container-mob {
