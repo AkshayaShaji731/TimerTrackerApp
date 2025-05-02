@@ -1,7 +1,9 @@
 import { createNavBar, navBarMob } from "../data/navbar.js";
+import { createWeekGraph } from "../data/graph.js";
 createNavBar()
 navBarMob()
-
+console.log(document.querySelector(".graph"))
+createWeekGraph()
 
 let dataArray = JSON.parse(localStorage.getItem('task')) || [];
 let completedArray = JSON.parse(localStorage.getItem('status')) || [];

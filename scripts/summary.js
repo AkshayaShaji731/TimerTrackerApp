@@ -1,6 +1,8 @@
 import { createNavBar,navBarMob} from "../data/navbar.js";
+import { createWeekGraph } from "../data/graph.js";
 createNavBar()
 navBarMob()
+createWeekGraph()
 const mainCont = document.querySelector(".main-container")
 // let arrays=[]
 let dataArray = JSON.parse(localStorage.getItem('task')) || [];

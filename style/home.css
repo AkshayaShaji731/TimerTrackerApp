@@ -16,6 +16,7 @@ body {
 }
 
 .wrapper {
+    background-color: rgb(69, 92, 92);
     display: grid;
     position: relative;
     /* width: 100%;

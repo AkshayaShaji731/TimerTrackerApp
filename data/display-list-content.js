@@ -357,73 +357,74 @@ function dailyTask(dataArray, currentDate) {
 }
 // dailyTask(dataArray)
 
-function graph() {
-    let graphObj= {
-        date:"",
-        time:""
-    }
-    let dateArray = []
-    let min
-    let sec
-    let hour
-    let total = {
-        hour: 0,
-        minute: 0,
-        seconds: 0
-    }
-   let graphData=[]
-    // console.log(dataArray)
+// export function graph() {
+//     let graphObj= {
+//         date:"",
+//         time:""
+//     }
+//     let dateArray = []
+//     let min
+//     let sec
+//     let hour
+//     let total = {
+//         hour: 0,
+//         minute: 0,
+//         seconds: 0
+//     }
+//    let graphData=[]
+//     // console.log(dataArray)
 
-    for (let i = 0; i < dataArray.length; i++) {
-        let demodate = dataArray[i].currentDate
-        let uniq = [...new Set(demodate)]
-        dateArray.push(...uniq)
-        dateArray = [...new Set(dateArray)]
+//     for (let i = 0; i < dataArray.length; i++) {
+//         let demodate = dataArray[i].currentDate
+//         let uniq = [...new Set(demodate)]
+//         dateArray.push(...uniq)
+//         dateArray = [...new Set(dateArray)]
 
-    }
+//     }
 
-    for(let d=0;d<dateArray.length;d++){
-        for (let k = 0; k < dataArray.length; k++) {
+//     for(let d=0;d<dateArray.length;d++){
+//         for (let k = 0; k < dataArray.length; k++) {
         
-            let dayTotal = dataArray[k].dateTotal
+//             let dayTotal = dataArray[k].dateTotal
     
-                for (let j = 0; j < dayTotal.length; j++) {
-                    let task = dayTotal[j];
-                    // let demo = dayTotal[j]
-                    if (task.date == dateArray[d]) {
-                        hour = task.hour;
-                        min = task.minute;
-                        sec = task.seconds;
-                        total.hour += hour;
-                        total.minute += min;
-                        total.seconds += sec;
-                        if (total.seconds >= 60) {
-                            total.minute += Math.floor(total.seconds / 60);
-                            total.seconds = total.seconds % 60;
-                        }
+//                 for (let j = 0; j < dayTotal.length; j++) {
+//                     let task = dayTotal[j];
+//                     // let demo = dayTotal[j]
+//                     if (task.date == dateArray[d]) {
+//                         hour = task.hour;
+//                         min = task.minute;
+//                         sec = task.seconds;
+//                         total.hour += hour;
+//                         total.minute += min;
+//                         total.seconds += sec;
+//                         if (total.seconds >= 60) {
+//                             total.minute += Math.floor(total.seconds / 60);
+//                             total.seconds = total.seconds % 60;
+//                         }
     
-                        if (total.minute >= 60) {
-                            total.hour += Math.floor(total.minute / 60);
-                            total.minute = total.minute % 60;
-                        }
-                    }
-                }
-                graphObj.date=dateArray[d]
-                graphObj.time=total
-        }
-        graphData.push(graphObj)
-        graphObj= {
-            date:"",
-            time:""
-        }
-        total = {
-            hour: 0,
-            minute: 0,
-            seconds: 0
-        }
-    }
-    console.log(graphData)
-}
+//                         if (total.minute >= 60) {
+//                             total.hour += Math.floor(total.minute / 60);
+//                             total.minute = total.minute % 60;
+//                         }
+//                     }
+//                 }
+//                 graphObj.date=dateArray[d]
+//                 graphObj.time=total
+//         }
+//         graphData.push(graphObj)
+//         graphObj= {
+//             date:"",
+//             time:""
+//         }
+//         total = {
+//             hour: 0,
+//             minute: 0,
+//             seconds: 0
+//         }
+//     }
+//     console.log(graphData)
+//     return graphData
+// }
 
-graph()
+// graph()
 

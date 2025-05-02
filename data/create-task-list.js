@@ -207,5 +207,5 @@ export function createlistMob(getDate, getDescription, getName, sNum, i, getTime
 }
 function renderMob(dataArray){
     taskTable.innerHTML=" "
-    displayList(dataArray)
+    createlistMob(dataArray)
 }
