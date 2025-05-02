@@ -1,7 +1,9 @@
 import { displayList } from "../scripts/home.js";
+// import { renderMob } from "./create-task-list.js";
 import { displayContent, timer, listOfTime } from "./display-list-content.js";
 const tableList = document.querySelector('.task-table')
 const task = document.querySelector('.task-list-item')
+
 
 
 let dataArray = JSON.parse(localStorage.getItem('task')) || [];
@@ -104,6 +106,7 @@ export function createlist(getDate, getTag, getDescription, getName, sNum, i, ge
 
         timer(index, timeobj)
         listOfTime(index)
+        renderMob(dataArray)
 
     })
 }
@@ -124,8 +127,8 @@ export function createLS(getName, getDescription, getTag, getDate) {
             currentTime: [],
             currentDate: [],
             totalTaskTime: "",
-            dateTotal:[],
-            dailyTotalTime:[],
+            dateTotal: [],
+            dailyTotalTime: [],
             status: " Not Completed"
 
         }
@@ -142,7 +145,7 @@ export function createLS(getName, getDescription, getTag, getDate) {
     getDate.value = ""
     window.location.reload()
 }
-
+const taskTable = document.querySelector(".display-task")
 
 export function render(dataArray) {
     tableList.innerHTML = `
@@ -156,7 +159,10 @@ export function render(dataArray) {
               <th id="t-time">Time<th>  
               <th id="t-btn"></th>
             </tr>`
+
+    taskTable.innerHTML = ``
     displayList(dataArray)
+
 }
 
 export function total(data) {

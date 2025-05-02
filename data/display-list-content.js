@@ -1,5 +1,4 @@
 import { render, total } from "./create-task-list-table.js";
-import { renderMob} from "./create-task-list.js";
 
 let dataArray = JSON.parse(localStorage.getItem('task')) || [];
 const displaylistCon = document.querySelector('.display-content')
@@ -67,7 +66,7 @@ export function displayContent(time, name, desc, tag, date, index, enddate, stat
         }
         console.log(dataArray)
         render(dataArray)
-        renderMob(dataArray)
+
     })
     if (status == "completed") {
         document.querySelector('.submit').remove()
@@ -143,7 +142,6 @@ export function timer(index) {
     document.querySelector("#d-stop-btn").addEventListener("click", (e) => {
         listOfTime(index)
         render(dataArray)
-        renderMob(dataArray)
         e.preventDefault()
         clearInterval(interval)
         let time = {
@@ -167,7 +165,6 @@ export function timer(index) {
 
 
         render(dataArray)
-        renderMob(dataArray)
 
         minute.innerHTML = "00:"
         hours.innerHTML = "00:"
