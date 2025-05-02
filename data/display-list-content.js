@@ -1,4 +1,5 @@
 import { render, total } from "./create-task-list-table.js";
+import { renderMob} from "./create-task-list.js";
 
 let dataArray = JSON.parse(localStorage.getItem('task')) || [];
 const displaylistCon = document.querySelector('.display-content')
@@ -66,6 +67,7 @@ export function displayContent(time, name, desc, tag, date, index, enddate, stat
         }
         console.log(dataArray)
         render(dataArray)
+        renderMob(dataArray)
     })
     if (status == "completed") {
         document.querySelector('.submit').remove()
@@ -141,6 +143,7 @@ export function timer(index) {
     document.querySelector("#d-stop-btn").addEventListener("click", (e) => {
         listOfTime(index)
         render(dataArray)
+        renderMob(dataArray)
         e.preventDefault()
         clearInterval(interval)
         let time = {
@@ -160,10 +163,11 @@ export function timer(index) {
 
         localStorage.setItem('task', JSON.stringify(dataArray));
 
-        // let dailydata=daily()
+        let dailydata=daily()
 
 
         render(dataArray)
+        renderMob(dataArray)
 
         minute.innerHTML = "00:"
         hours.innerHTML = "00:"
@@ -257,25 +261,15 @@ export function daily() {
             date = dataArray[i].currentDate
             let [taskArray, taskArrayDate] = dailyTask(dataArray[i], currentDate);
             dataArray[i].dateTotal = taskArray
-            // console.log(array)
-            // array.push(taskArray);
             localStorage.setItem('task', JSON.stringify(dataArray));
             array = taskArrayDate
-            // console.log(array)
             taskArrayEl = taskArray
-            // console.log(dataArray[i].dateTotal)
         }
-        // console.log(dataArray)
         for (let j = 0; j < dataArray.length; j++) {
             let currentTask = dataArray[j].dateTotal;
-            //  console.log(currentTask)
-            // let task=array
-
-            // console.log(task)
             for (let k = 0; k < currentTask.length; k++) {
                 let task = currentTask[k];
                 if (task.date == currentDate) {
-                    // console.log("hlo")
                     hour = currentTask[k].hour;
                     min = currentTask[k].minute;
                     sec = currentTask[k].seconds;
@@ -355,76 +349,3 @@ function dailyTask(dataArray, currentDate) {
     let demo = tasktotal.date
     return [array, demo]
 }
-// dailyTask(dataArray)
-
-// export function graph() {
-//     let graphObj= {
-//         date:"",
-//         time:""
-//     }
-//     let dateArray = []
-//     let min
-//     let sec
-//     let hour
-//     let total = {
-//         hour: 0,
-//         minute: 0,
-//         seconds: 0
-//     }
-//    let graphData=[]
-//     // console.log(dataArray)
-
-//     for (let i = 0; i < dataArray.length; i++) {
-//         let demodate = dataArray[i].currentDate
-//         let uniq = [...new Set(demodate)]
-//         dateArray.push(...uniq)
-//         dateArray = [...new Set(dateArray)]
-
-//     }
-
-//     for(let d=0;d<dateArray.length;d++){
-//         for (let k = 0; k < dataArray.length; k++) {
-        
-//             let dayTotal = dataArray[k].dateTotal
-    
-//                 for (let j = 0; j < dayTotal.length; j++) {
-//                     let task = dayTotal[j];
-//                     // let demo = dayTotal[j]
-//                     if (task.date == dateArray[d]) {
-//                         hour = task.hour;
-//                         min = task.minute;
-//                         sec = task.seconds;
-//                         total.hour += hour;
-//                         total.minute += min;
-//                         total.seconds += sec;
-//                         if (total.seconds >= 60) {
-//                             total.minute += Math.floor(total.seconds / 60);
-//                             total.seconds = total.seconds % 60;
-//                         }
-    
-//                         if (total.minute >= 60) {
-//                             total.hour += Math.floor(total.minute / 60);
-//                             total.minute = total.minute % 60;
-//                         }
-//                     }
-//                 }
-//                 graphObj.date=dateArray[d]
-//                 graphObj.time=total
-//         }
-//         graphData.push(graphObj)
-//         graphObj= {
-//             date:"",
-//             time:""
-//         }
-//         total = {
-//             hour: 0,
-//             minute: 0,
-//             seconds: 0
-//         }
-//     }
-//     console.log(graphData)
-//     return graphData
-// }
-
-// graph()
-

@@ -3,9 +3,14 @@ import { createWeekGraph } from "../data/graph.js";
 createNavBar()
 navBarMob()
 createWeekGraph()
-const mainCont = document.querySelector(".main-container")
-// let arrays=[]
+
 let dataArray = JSON.parse(localStorage.getItem('task')) || [];
+const mainCont = document.querySelector(".main-container")
+const activeTime=document.querySelector(".active-hour")
+let dayActive=daily()
+console.log(dayActive)
+activeTime.innerHTML=`Active Time : ${dayActive.hour}:${dayActive.minute}:${dayActive.seconds}`
+// let arrays=[]
 console.log(dataArray);
 
 const date = new Date().toISOString().split('T')[0]
@@ -32,3 +37,110 @@ for (let i = 0; i < dataArray.length; i++) {
     }
 }
  
+function daily() {
+    let array
+    let date
+    let time
+    let hour
+    let min
+    let sec
+    let currentDate = new Date().toISOString().split('T')[0];
+    let total = {
+        hour: 0,
+        minute: 0,
+        seconds: 0
+    }
+    let taskArrayEl
+    if (dataArray.length >= 1) {
+        for (let i = 0; i < dataArray.length; i++) {
+            date = dataArray[i].currentDate
+            let [taskArray, taskArrayDate] = dailyTask(dataArray[i], currentDate);
+            dataArray[i].dateTotal = taskArray
+            localStorage.setItem('task', JSON.stringify(dataArray));
+            array = taskArrayDate
+            taskArrayEl = taskArray
+        }
+        for (let j = 0; j < dataArray.length; j++) {
+            let currentTask = dataArray[j].dateTotal;
+            for (let k = 0; k < currentTask.length; k++) {
+                let task = currentTask[k];
+                if (task.date == currentDate) {
+                    hour = currentTask[k].hour;
+                    min = currentTask[k].minute;
+                    sec = currentTask[k].seconds;
+
+                    total.hour += hour;
+                    total.minute += min;
+                    total.seconds += sec;
+
+                    if (total.seconds >= 60) {
+                        total.minute += Math.floor(total.seconds / 60);
+                        total.seconds = total.seconds % 60;
+                    }
+
+                    if (total.minute >= 60) {
+                        total.hour += Math.floor(total.minute / 60);
+                        total.minute = total.minute % 60;
+                    }
+                }
+            }
+        }
+    }
+    return total
+}
+
+
+function dailyTask(dataArray, currentDate) {
+    let array = []
+    let date
+    let time
+    let hour
+    let min
+    let sec
+    let tasktotal = {
+        date: currentDate,
+        hour: 0,
+        minute: 0,
+        seconds: 0
+    }
+    date = dataArray.currentDate
+    time = dataArray.time
+    // console.log(time)    
+    for (let j = 0; j < time.length; j++) {
+
+        hour = time[j].hour
+        min = time[j].min
+        sec = time[j].second
+
+        if (date[j] == date[j - 1]) {
+            tasktotal.hour += hour
+            tasktotal.minute += min
+            tasktotal.seconds += sec
+            tasktotal.date = date[j]
+            if (tasktotal.seconds >= 59) {
+                tasktotal.minute += Math.floor(tasktotal.seconds / 60)
+                tasktotal.seconds = tasktotal.seconds % 60
+            }
+
+            if (tasktotal.minute >= 59) {
+                tasktotal.hour += Math.floor(tasktotal.minute / 60)
+                tasktotal.minute = tasktotal.minute % 60
+            }
+
+        }
+        else {
+            if (j > 0) {
+                array.push({ ...tasktotal });
+            }
+            tasktotal = {
+                date: date,
+                hour: hour,
+                minute: min,
+                seconds: sec
+            };
+        }
+    }
+    array.push({ ...tasktotal });
+    let demo = tasktotal.date
+    return [array, demo]
+}

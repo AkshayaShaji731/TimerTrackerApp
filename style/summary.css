@@ -155,7 +155,11 @@ body {
     text-decoration: none;
     color: #fff;
 }
-
+.active-hour{
+    font-size:18px;
+    color:white;
+    font-weight: 700;
+}
 @media screen and (min-width:1024px) {
     .wrapper {
         background-color: rgb(69, 92, 92);

@@ -3,7 +3,8 @@ let dataArray = JSON.parse(localStorage.getItem('task')) || [];
 export function createWeekGraph() {
   let graphChart = document.getElementById("day-graph").getContext("2d");
   // console.log(graphChart)
-
+  Chart.defaults.color = "  white "
+  Chart.defaults.font.size="16px"
 
   const chart = new Chart(graphChart, {
     type: "bar",
@@ -12,7 +13,8 @@ export function createWeekGraph() {
       datasets: [{
         label: "week data ",
         data: graph(),
-      }]
+
+      }],
     },
     options: {
       plugins: {
@@ -22,6 +24,7 @@ export function createWeekGraph() {
           font: {
             size: 25,
           },
+          color: "white"
         },
         tooltip: {
           enabled: false,
@@ -31,13 +34,21 @@ export function createWeekGraph() {
         x: {
           title: {
             display: true,
-            text: "dates"
+            text: "Dates",
+            color: "white",
+            font: {
+              size: 25,
+            }
           }
         },
         y: {
           title: {
             display: true,
-            text: "minutes"
+            text: "Minutes",
+            color: "white",
+            font: {
+              size: 25,
+            }
           }
         }
       }
@@ -133,9 +144,9 @@ function graph() {
     for (let m = 0; m < graphData.length; m++) {
       if (weekArray[l] == graphData[m].date) {
         let points = graphData[m].time
-        let hour = points.hour*60
+        let hour = points.hour * 60
         let min = points.minute
-        let sec = points.seconds/60
+        let sec = points.seconds / 60
         totalSec = hour + min + sec
         break
       }
