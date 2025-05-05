@@ -1,5 +1,4 @@
 import { displayList } from "../scripts/home.js";
-// import { renderMob } from "./create-task-list.js";
 import { displayContent, timer, listOfTime } from "./display-list-content.js";
 const tableList = document.querySelector('.task-table')
 const task = document.querySelector('.task-list-item')
@@ -106,8 +105,6 @@ export function createlist(getDate, getTag, getDescription, getName, sNum, i, ge
 
         timer(index, timeobj)
         listOfTime(index)
-        renderMob(dataArray)
-
     })
 }
 

@@ -1,6 +1,4 @@
-// import { total } from "./create-task-list-table.js"; 
 import { displayContent,timer,listOfTime } from "./display-list-content.js";
-// import { displayList } from "../scripts/home.js";
 import { render } from "./create-task-list-table.js";
 
 const taskTable=document.querySelector(".display-task")
@@ -41,7 +39,7 @@ export function createlistMob(getDate, getDescription, getName, sNum, i, getTime
         displayTimer.innerHTML = getTime.hour + ":" + getTime.min + ":" + getTime.sec
     }
 
-    deleteBtn.addEventListener("click", (e) => {
+    deleteBtn.addEventListener("click", (e) => {x
         taskDiv.remove()
 
         let dataArray = JSON.parse(localStorage.getItem('task')) || [];

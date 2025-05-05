@@ -1,42 +1,50 @@
-import { createNavBar,navBarMob} from "../data/navbar.js";
-import { createWeekGraph } from "../data/graph.js";
+import { createNavBar, navBarMob } from "../data/navbar.js";
+import {createDayGraph} from "../data/graph.js";
 createNavBar()
 navBarMob()
-createWeekGraph()
+createDayGraph()
+
 
 let dataArray = JSON.parse(localStorage.getItem('task')) || [];
 const mainCont = document.querySelector(".main-container")
-const activeTime=document.querySelector(".active-hour")
-let dayActive=daily()
-console.log(dayActive)
-activeTime.innerHTML=`Active Time : ${dayActive.hour}:${dayActive.minute}:${dayActive.seconds}`
-// let arrays=[]
-console.log(dataArray);
+const dayTask=document.querySelector(".daily-task")
+const activeTime = document.querySelector(".active-hour")
+activeTimeFunction()
 
-const date = new Date().toISOString().split('T')[0]
+taskCreatedToady()
+
+function activeTimeFunction() {
+    let dayActive = daily()
+
+    activeTime.innerHTML = `Active Time : ${dayActive.hour}:${dayActive.minute}:${dayActive.seconds}`
+}
+
+function taskCreatedToady(){
+    const date = new Date().toISOString().split('T')[0]
 
 for (let i = 0; i < dataArray.length; i++) {
-    
-    if(date==dataArray[i].date){
+
+    if (date == dataArray[i].date) {
         let taskCon = document.createElement("div")
-    taskCon.classList.add("task")
-    let time="00:00:00"
-    if( dataArray[i].totalTaskTime==""){
-       time="00:00:00"
-       console.log(time);
-    }
-    else{
-        time=dataArray[i].totalTaskTime.hour+":"+dataArray[i].totalTaskTime.min+":"+dataArray[i].totalTaskTime.sec
-    }
-    taskCon.innerHTML = `
+        taskCon.classList.add("task")
+        let time = "00:00:00"
+        if (dataArray[i].totalTaskTime == "") {
+            time = "00:00:00"
+            console.log(time);
+        }
+        else {
+            time = dataArray[i].totalTaskTime.hour + ":" + dataArray[i].totalTaskTime.min + ":" + dataArray[i].totalTaskTime.sec
+        }
+        taskCon.innerHTML = `
       <h3>${dataArray[i].name}</h3>
       <p>${dataArray[i].description}</p>
       <p>Total Time:${time}</p>
           `
-     mainCont.appendChild(taskCon)
+        dayTask.appendChild(taskCon)
     }
 }
- 
+}
+
 function daily() {
     let array
     let date

@@ -164,6 +164,18 @@ body {
     color:white;
     font-weight: 700;
 }
+.filter-btn{
+    margin: 10px;
+    display: block;
+    background-color: #fff;
+    width: fit-content;
+}
+.filter-btn button{
+    border: none;
+    padding: 10px 7px;
+    font-weight: 500;
+    background: transparent;
+}
 @media screen and (min-width:1024px) {
     .wrapper {
         background-color: rgb(69, 92, 92);

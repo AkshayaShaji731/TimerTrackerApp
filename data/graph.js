@@ -1,12 +1,17 @@
 let dataArray = JSON.parse(localStorage.getItem('task')) || [];
-
+const prevWeekBtn = document.querySelector(".prev-week")
+// console.log(prevWeekBtn)
+const currWeekBtn = document.querySelector(".current-week")
+let chart = null;
 export function createWeekGraph() {
   let graphChart = document.getElementById("day-graph").getContext("2d");
   // console.log(graphChart)
   Chart.defaults.color = "  white "
-  Chart.defaults.font.size="16px"
-
-  const chart = new Chart(graphChart, {
+  Chart.defaults.font.size = "16px"
+  if (chart) {
+    chart.destroy()
+  }
+  const config = {
     type: "bar",
     data: {
       labels: week(),
@@ -39,6 +44,10 @@ export function createWeekGraph() {
             font: {
               size: 25,
             }
+          },
+          type: 'time',
+          time: {
+            unit: "day"
           }
         },
         y: {
@@ -53,23 +62,42 @@ export function createWeekGraph() {
         }
       }
     }
-  })
+  }
+  chart = new Chart(graphChart, config)
 }
 
+let curr = new Date
+prevWeekBtn.addEventListener("click", () => {
+  prevWeekBtn.style.backgroundColor = "darkblue"
+  prevWeekBtn.style.color = "white"
+  currWeekBtn.style.backgroundColor = "white"
+  currWeekBtn.style.color = "black"
+  curr = new Date
+  curr.setDate(curr.getDate() - 7);
+  createWeekGraph()
+})
 
+currWeekBtn.addEventListener("click", () => {
+  currWeekBtn.style.backgroundColor = "darkblue"
+  currWeekBtn.style.color = "white"
+  prevWeekBtn.style.backgroundColor = "white"
+  prevWeekBtn.style.color = ""
+  curr = new Date
+  createWeekGraph()
+})
+currWeekBtn.style.backgroundColor = "darkblue"
+currWeekBtn.style.color = "white"
 function week() {
-  let curr = new Date
   let week = []
-
+  const currentDate = new Date(curr);
   for (let i = 1; i <= 7; i++) {
-    let first = curr.getDate() - curr.getDay() + i
-    let day = new Date(curr.setDate(first)).toISOString().slice(0, 10)
+    let first = currentDate.getDate() - currentDate.getDay() + i
+    let day = new Date(currentDate.setDate(first)).toISOString().slice(0, 10)
     week.push(day)
   }
-  // console.log(week)
-
   return week
 }
+
 function graph() {
   let graphObj = {
     date: "",
@@ -159,4 +187,95 @@ function graph() {
   }
   // console.log(graphPoints)
   return graphPoints
+}
+
+
+export function createDayGraph() {
+  let graphChart = document.getElementById("day-graph").getContext("2d");
+  // console.log(graphChart)
+  Chart.defaults.color = "  white "
+  Chart.defaults.font.size = "16px"
+
+  const chart = new Chart(graphChart, {
+    type: "bar",
+    data: {
+      labels: day(),
+      datasets: [{
+        label: "week data ",
+        data: daygraph(),
+
+      }],
+    },
+    options: {
+      plugins: {
+        title: {
+          display: true,
+          text: "weekly data",
+          font: {
+            size: 25,
+          },
+          color: "white"
+        },
+        tooltip: {
+          enabled: false,
+        },
+      },
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: "Dates",
+            color: "white",
+            font: {
+              size: 25,
+            }
+          }
+        },
+        y: {
+          title: {
+            display: true,
+            text: "Minutes",
+            color: "white",
+            font: {
+              size: 25,
+            }
+          }
+        }
+      }
+    }
+  })
+}
+
+
+function day() {
+  let array = []
+  let currentDate = new Date().toISOString().split('T')[0];
+  for (let i = 0; i < dataArray.length; i++) {
+    let dateArray = dataArray[i].dateTotal
+    for (let j = 0; j < dateArray.length; j++) {
+      if (dateArray[j].date == currentDate) {
+        array.push(dataArray[i].name)
+      }
+    }
+  }
+  // console.log(array)
+  return array
+}
+
+
+function daygraph() {
+  let array = []
+  let currentDate = new Date().toISOString().split('T')[0];
+  for (let i = 0; i < dataArray.length; i++) {
+    let dateArray = dataArray[i].dateTotal
+    for (let j = 0; j < dateArray.length; j++) {
+      if (dateArray[j].date == currentDate) {
+        let arrayEl = dateArray[j]
+        let points = arrayEl.hour * 60 + arrayEl.minute + arrayEl.seconds / 60
+        array.push(points)
+      }
+    }
+  }
+  // console.log(array)
+  return array
 }

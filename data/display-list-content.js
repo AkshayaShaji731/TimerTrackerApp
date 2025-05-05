@@ -1,3 +1,4 @@
+import { displayList } from "../scripts/home.js";
 import { render, total } from "./create-task-list-table.js";
 
 let dataArray = JSON.parse(localStorage.getItem('task')) || [];
@@ -6,7 +7,8 @@ const days = document.querySelector('.days')
 const timerCon = document.querySelector(".display-timer")
 const timeslist = document.querySelector(".times")
 let completedArray = JSON.parse(localStorage.getItem('status')) || [];
-// let dayArray = JSON.parse(localStorage.getItem('daily')) || [];
+const searchInput = document.querySelector(".search")
+const searchBtn = document.getElementById("search-btn")
 
 
 export function displayContent(time, name, desc, tag, date, index, enddate, status) {
@@ -161,7 +163,7 @@ export function timer(index) {
 
         localStorage.setItem('task', JSON.stringify(dataArray));
 
-        let dailydata=daily()
+        let dailydata = daily()
 
 
         render(dataArray)
@@ -266,6 +268,7 @@ export function daily() {
             let currentTask = dataArray[j].dateTotal;
             for (let k = 0; k < currentTask.length; k++) {
                 let task = currentTask[k];
+                // console.log(task.date)
                 if (task.date == currentDate) {
                     hour = currentTask[k].hour;
                     min = currentTask[k].minute;
@@ -288,6 +291,7 @@ export function daily() {
             }
         }
     }
+    // console.log(total)
     return total
 }
 
@@ -300,7 +304,7 @@ function dailyTask(dataArray, currentDate) {
     let min
     let sec
     let tasktotal = {
-        date: currentDate,
+        date:"",
         hour: 0,
         minute: 0,
         seconds: 0
@@ -344,5 +348,23 @@ function dailyTask(dataArray, currentDate) {
     }
     array.push({ ...tasktotal });
     let demo = tasktotal.date
+    // console.log(array)
     return [array, demo]
+}
+export function searchTask() {
+    let searchArray = []
+    searchBtn.addEventListener("click", () => {
+        let searchEl = searchInput.value
+        for (let i = 0; i < dataArray.length; i++) {
+            if (dataArray[i].name == searchEl) {
+                searchArray.push(dataArray[i])
+            }
+        }
+        searchInput.value=""
+        if(searchArray.length==0){
+            alert("it not found")
+        }
+        render(searchArray)
+        searchArray=[]
+    })
 }

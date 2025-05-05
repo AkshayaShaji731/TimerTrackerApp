@@ -2,7 +2,6 @@ import { createNavBar, navBarMob } from "../data/navbar.js";
 import { createWeekGraph } from "../data/graph.js";
 createNavBar()
 navBarMob()
-console.log(document.querySelector(".graph"))
 createWeekGraph()
 
 let dataArray = JSON.parse(localStorage.getItem('task')) || [];
@@ -16,7 +15,30 @@ const days = document.querySelector('.days')
 const timerCon = document.querySelector(".display-timer")
 const timespending = document.querySelector(".times-pending")
 const timescompleted=document.querySelector(".times-completed")
+const prevWeekBtn = document.querySelector(".prev-week")
+const currWeekBtn = document.querySelector(".current-week")
 displayTracking()
+// let curr = new Date
+// prevWeekBtn.addEventListener("click", () => {
+//   prevWeekBtn.style.backgroundColor = "darkblue"
+//   prevWeekBtn.style.color = "white"
+//   currWeekBtn.style.backgroundColor = "white"
+//   currWeekBtn.style.color = "black"
+//   curr = new Date
+//   curr.setDate(curr.getDate() - 7);
+//   createWeekGraph()
+// })
+
+// currWeekBtn.addEventListener("click", () => {
+//   currWeekBtn.style.backgroundColor = "darkblue"
+//   currWeekBtn.style.color = "white"
+//   prevWeekBtn.style.backgroundColor = "white"
+//   prevWeekBtn.style.color = "black"
+//   curr = new Date
+//   createWeekGraph()
+// })
+// currWeekBtn.style.backgroundColor = "darkblue"
+// currWeekBtn.style.color = "white"
 function displayTracking() {
     for (let i = 0; i < dataArray.length; i++) {
         let sNum = i + 1

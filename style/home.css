@@ -133,17 +133,19 @@ body {
 }
 
 .main-container header div {
-    display: block;
-    background-color: gray;
+    display: flex;
+    /* background-color: gray; */
     border-radius: 20px;
-    padding: 3px;
+    /* padding: 3px; */
 }
 
 .search {
     padding: 8px;
     border: none;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
     background-color: grey;
-    margin-left: 5px;
+    /* margin-left: 5px; */
 }
 
 .search::placeholder {
@@ -151,9 +153,12 @@ body {
 }
 
 #search-btn {
-    background: transparent;
+    background: grey;
     border: none;
-    margin-right: 5px;
+    margin:0;
+    padding:7px ;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
 .line {
