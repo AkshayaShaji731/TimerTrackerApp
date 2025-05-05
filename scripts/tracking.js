@@ -1,5 +1,5 @@
 import { createNavBar, navBarMob } from "../data/navbar.js";
-import { createWeekGraph } from "../data/graph.js";
+import { createWeekGraph } from "../data/weekly-graph.js";
 createNavBar()
 navBarMob()
 createWeekGraph()

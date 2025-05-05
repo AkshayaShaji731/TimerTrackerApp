@@ -1,5 +1,5 @@
 import { createNavBar, navBarMob } from "../data/navbar.js";
-import {createDayGraph} from "../data/graph.js";
+import { createDayGraph } from "../data/daily-graph.js";
 createNavBar()
 navBarMob()
 createDayGraph()
