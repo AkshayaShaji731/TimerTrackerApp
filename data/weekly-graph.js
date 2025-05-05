@@ -188,3 +188,6 @@ function graph() {
   // console.log(graphPoints)
   return graphPoints
 }
+function filter(){
+  
+}

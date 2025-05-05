@@ -126,7 +126,7 @@ export function createLS(getName, getDescription, getTag, getDate) {
             totalTaskTime: "",
             dateTotal: [],
             dailyTotalTime: [],
-            status: " Not Completed"
+            status: "Task Created"
 
         }
         let dataArray = JSON.parse(localStorage.getItem('task')) || [];

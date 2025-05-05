@@ -7,11 +7,13 @@ createDayGraph()
 
 let dataArray = JSON.parse(localStorage.getItem('task')) || [];
 const mainCont = document.querySelector(".main-container")
-const dayTask=document.querySelector(".daily-task")
+const dayTask = document.querySelector(".daily-task")
+const Active = document.querySelector(".active-task")
 const activeTime = document.querySelector(".active-hour")
 activeTimeFunction()
 
 taskCreatedToady()
+activeTask()
 
 function activeTimeFunction() {
     let dayActive = daily()
@@ -19,30 +21,59 @@ function activeTimeFunction() {
     activeTime.innerHTML = `Active Time : ${dayActive.hour}:${dayActive.minute}:${dayActive.seconds}`
 }
 
-function taskCreatedToady(){
+function taskCreatedToady() {
     const date = new Date().toISOString().split('T')[0]
 
-for (let i = 0; i < dataArray.length; i++) {
+    for (let i = 0; i < dataArray.length; i++) {
 
-    if (date == dataArray[i].date) {
-        let taskCon = document.createElement("div")
-        taskCon.classList.add("task")
-        let time = "00:00:00"
-        if (dataArray[i].totalTaskTime == "") {
-            time = "00:00:00"
-            console.log(time);
-        }
-        else {
-            time = dataArray[i].totalTaskTime.hour + ":" + dataArray[i].totalTaskTime.min + ":" + dataArray[i].totalTaskTime.sec
-        }
-        taskCon.innerHTML = `
-      <h3>${dataArray[i].name}</h3>
+        if (date == dataArray[i].date) {
+            let taskCon = document.createElement("div")
+            taskCon.classList.add("task")
+            let time = "00:00:00"
+            if (dataArray[i].totalTaskTime == "") {
+                time = "00:00:00"
+                console.log(time);
+            }
+            else {
+                time = dataArray[i].totalTaskTime.hour + ":" + dataArray[i].totalTaskTime.min + ":" + dataArray[i].totalTaskTime.sec
+            }
+            taskCon.innerHTML = `
+      <h4>${dataArray[i].name}</h4>
       <p>${dataArray[i].description}</p>
       <p>Total Time:${time}</p>
           `
-        dayTask.appendChild(taskCon)
+            dayTask.appendChild(taskCon)
+        }
     }
 }
+export function activeTask() {
+    let currentDate = new Date().toISOString().split('T')[0]
+    let array = []
+    for (let i = 0; i < dataArray.length; i++) {
+        let dateArray = dataArray[i].dateTotal
+        for (let j = 0; j < dateArray.length; j++) {
+            if (dateArray[j].date == currentDate) {
+                let taskCon = document.createElement("div")
+                taskCon.classList.add("task")
+                let time = "00:00:00"
+                if (dataArray[i].totalTaskTime == "") {
+                    time = "00:00:00"
+                    console.log(time);
+                }
+                else {
+                    time = dataArray[i].totalTaskTime.hour + ":" + dataArray[i].totalTaskTime.min + ":" + dataArray[i].totalTaskTime.sec
+                }
+                taskCon.innerHTML = `
+                  <h4>${dataArray[i].name}</h4>
+                  <p>${dataArray[i].description}</p>
+                  <p>Total Time:${time}</p>
+                 `
+                Active.appendChild(taskCon)
+            }
+        }
+    }
+
+
 }
 
 function daily() {

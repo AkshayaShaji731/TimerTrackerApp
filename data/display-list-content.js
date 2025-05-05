@@ -51,13 +51,13 @@ export function displayContent(time, name, desc, tag, date, index, enddate, stat
            <td class="status-text">${status}</td>
          </tr>
        </table>
-       <button class="submit">Submit</button>`
+       <button class="submit">Finished</button>`
     let endDate
     document.querySelector('.submit').addEventListener("click", () => {
         document.querySelector(".status-text").innerText = "completed"
         endDate = new Date().toISOString().split('T')[0];
         dataArray[index].endDate = endDate
-        dataArray[index].status = "completed"
+        dataArray[index].status = "Completed"
         localStorage.setItem('task', JSON.stringify(dataArray));
         for (let i = 0; i < dataArray.length; i++) {
             let status = dataArray[i].status
@@ -115,19 +115,17 @@ export function timer(index) {
 
         let data = dataArray[index]
 
+        data.status="Pending"
+
         let nowTime = new Date().toLocaleTimeString();
         let currentTime = data.currentTime
         currentTime.push(nowTime)
 
         let dayArray = data.dateTotal
-        // console.log(dayArray)
-        // let taskArray = dailyTask(dataArray[i]);
-        // dayArray.push(taskArray);
 
         let today = new Date().toISOString().split('T')[0];
         let currentDate = data.currentDate
         currentDate.push(today)
-        console.log(today)
         localStorage.setItem('task', JSON.stringify(dataArray));
     })
     document.querySelector('#d-pause-btn').addEventListener('click', () => {
