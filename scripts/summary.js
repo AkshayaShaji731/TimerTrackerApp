@@ -2,7 +2,6 @@ import { createNavBar, navBarMob } from "../data/navbar.js";
 import { createDayGraph } from "../data/daily-graph.js";
 createNavBar()
 navBarMob()
-createDayGraph()
 
 
 let dataArray = JSON.parse(localStorage.getItem('task')) || [];
@@ -15,6 +14,7 @@ activeTimeFunction()
 taskCreatedToady()
 activeTask()
 createDayGraph()
+
 function activeTimeFunction() {
     let dayActive = daily()
 
