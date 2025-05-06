@@ -25,6 +25,8 @@ export function createDayGraph() {
             }],
         },
         options: {
+            responsive: true,
+            maintainAspectRatio: false,
             plugins: {
                 title: {
                     display: true,
@@ -98,6 +100,6 @@ function daygraph() {
 filterBtn.addEventListener("click", () => {
     currentDate = filterInput.value
     createDayGraph()
-    activeTask()
+    activeTask(currentDate)
 
 })

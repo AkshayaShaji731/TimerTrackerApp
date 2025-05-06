@@ -14,7 +14,7 @@ activeTimeFunction()
 
 taskCreatedToady()
 activeTask()
-
+createDayGraph()
 function activeTimeFunction() {
     let dayActive = daily()
 
@@ -70,7 +70,7 @@ export function activeTask() {
                  `
                 Active.appendChild(taskCon)
             }
-        }
+        } 
     }
 
 
@@ -95,6 +95,7 @@ function daily() {
             date = dataArray[i].currentDate
             let [taskArray, taskArrayDate] = dailyTask(dataArray[i], currentDate);
             dataArray[i].dateTotal = taskArray
+            // console.log(taskArray)
             localStorage.setItem('task', JSON.stringify(dataArray));
             array = taskArrayDate
             taskArrayEl = taskArray
@@ -156,12 +157,12 @@ function dailyTask(dataArray, currentDate) {
             tasktotal.minute += min
             tasktotal.seconds += sec
             tasktotal.date = date[j]
-            if (tasktotal.seconds >= 59) {
+            if (tasktotal.seconds >= 60) {
                 tasktotal.minute += Math.floor(tasktotal.seconds / 60)
                 tasktotal.seconds = tasktotal.seconds % 60
             }
 
-            if (tasktotal.minute >= 59) {
+            if (tasktotal.minute >= 60) {
                 tasktotal.hour += Math.floor(tasktotal.minute / 60)
                 tasktotal.minute = tasktotal.minute % 60
             }
@@ -172,7 +173,7 @@ function dailyTask(dataArray, currentDate) {
                 array.push({ ...tasktotal });
             }
             tasktotal = {
-                date: date,
+                date: date[j],
                 hour: hour,
                 minute: min,
                 seconds: sec

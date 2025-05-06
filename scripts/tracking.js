@@ -7,6 +7,8 @@ createWeekGraph()
 let dataArray = JSON.parse(localStorage.getItem('task')) || [];
 let completedArray = JSON.parse(localStorage.getItem('status')) || [];
 
+const pendindMobCon=document.querySelector(".display-task-pending")
+const completedMobCon=document.querySelector(".display-task-completed")
 const tablePending = document.querySelector('.task-table-pending')
 const tableCompleted=document.querySelector('.task-table-completed')
 const displayPendingCon = document.querySelector('.display-pending')
@@ -18,27 +20,6 @@ const timescompleted=document.querySelector(".times-completed")
 const prevWeekBtn = document.querySelector(".prev-week")
 const currWeekBtn = document.querySelector(".current-week")
 displayTracking()
-// let curr = new Date
-// prevWeekBtn.addEventListener("click", () => {
-//   prevWeekBtn.style.backgroundColor = "darkblue"
-//   prevWeekBtn.style.color = "white"
-//   currWeekBtn.style.backgroundColor = "white"
-//   currWeekBtn.style.color = "black"
-//   curr = new Date
-//   curr.setDate(curr.getDate() - 7);
-//   createWeekGraph()
-// })
-
-// currWeekBtn.addEventListener("click", () => {
-//   currWeekBtn.style.backgroundColor = "darkblue"
-//   currWeekBtn.style.color = "white"
-//   prevWeekBtn.style.backgroundColor = "white"
-//   prevWeekBtn.style.color = "black"
-//   curr = new Date
-//   createWeekGraph()
-// })
-// currWeekBtn.style.backgroundColor = "darkblue"
-// currWeekBtn.style.color = "white"
 function displayTracking() {
     for (let i = 0; i < dataArray.length; i++) {
         let sNum = i + 1
@@ -64,6 +45,7 @@ function displayTracking() {
         }
         document.querySelector(".display-pending-con").style.display = "none"
         pendingTask(sNum, getDate, getName, endDate, getTime, getDescription, getTag, getStatus, time)
+        trackingPendingMob(sNum, getDate, getName, endDate, getTime, getDescription, getTag, getStatus, time)
     }
     for (let i = 0; i < completedArray.length; i++) {
         let sNum = i + 1
@@ -89,6 +71,7 @@ function displayTracking() {
         }
         document.querySelector(".display-completed-con").style.display = "none"
         completedTask(sNum, getDate, getName, endDate, getTime, getDescription, getTag, getStatus, time)
+        trackingCOmpletedMob(sNum, getDate, getName, endDate, getTime, getDescription, getTag, getStatus, time)
     }
 }
 
@@ -128,8 +111,8 @@ function completedTask(sNum, getDate, getName, endDate, getTime, getDescription,
     taskRow.innerHTML = `
      <td id="s-no">${sNum}</td>
      <td id="t-date">${getDate}</td>
-     <td id="t-name">${getName}</td>
-     <td id="t-desc">${endDate}</td>
+     <td id="t-name">${endDate}</td>
+     <td id="t-desc">${getName}</td>
      <td id="timer"></td>
      <td id="t-btn">
      <button class="details">Details</button>
@@ -250,4 +233,81 @@ function numberOfDays(numDays) {
     }
 
 }
+
+
+// mobile view
+function trackingPendingMob(sNum, getDate, getName, endDate, getTime, getDescription, getTag, getStatus, time){
+    const taskDiv=document.createElement("div");
+    taskDiv.classList.add('task-div')
+    taskDiv.innerHTML=`
+    <div class="date-name">
+      <h3>${sNum}.</h3> 
+      <h3> ${getName}</h3>
+        <p>${getDate}</p>
+    </div>    
+   <div class="btn-time">
+    <div id="btn">
+    <button class="details">Details</button>
+     </div>
+     <p id="timer"></p>
+    </div> `
+    
+    pendindMobCon.appendChild(taskDiv)
+
+    const deleteBtn = taskDiv.querySelector('.details')
+    const displayTimer = taskDiv.querySelector("#timer")
+    if (getTime.hour == undefined || getTime.min == undefined || getTime.sec == undefined) {
+        displayTimer.innerHTML = "00:00:00"
+    }
+    else {
+        displayTimer.innerHTML = getTime.hour + ":" + getTime.min + ":" + getTime.sec
+    }
+    taskDiv.querySelector(".details").addEventListener("click", () => {
+
+        document.querySelector(".display-pending-con").style.display = "block"
+        let array=dataArray[sNum-1]
+        displayContentTrack(sNum, getDate, getName, endDate, time, getDescription, getTag, getStatus,displayPendingCon)
+        timercloseData(array,timespending)
+        getNumDays(array)
+    }
+    )
+}
+function trackingCOmpletedMob(sNum, getDate, getName, endDate, getTime, getDescription, getTag, getStatus, time){
+    const taskDiv=document.createElement("div");
+    taskDiv.classList.add('task-div')
+    taskDiv.innerHTML=`
+    <div class="date-name">
+      <h3>${sNum}.</h3> 
+      <h3> ${getName}</h3>
+        <p>${getDate}</p>
+    </div>    
+   <div class="btn-time">
+    <div id="btn">
+    <button class="details">Details</button>
+     </div>
+     <p id="timer"></p>
+    </div> `
+    
+    completedMobCon.appendChild(taskDiv)
+
+    const deleteBtn = taskDiv.querySelector('.details')
+    const displayTimer = taskDiv.querySelector("#timer")
+    if (getTime.hour == undefined || getTime.min == undefined || getTime.sec == undefined) {
+        displayTimer.innerHTML = "00:00:00"
+    }
+    else {
+        displayTimer.innerHTML = getTime.hour + ":" + getTime.min + ":" + getTime.sec
+    }
+    taskDiv.querySelector(".details").addEventListener("click", () => {
+
+        document.querySelector(".display-completed-con").style.display = "block"
+        let array=completedArray[sNum-1]
+        displayContentTrack(sNum, getDate, getName, endDate, time, getDescription, getTag, getStatus,displayCompletedCon)
+        timercloseData(array,timescompleted)
+        getNumDays(array)
+    }
+    )
+}
+
+
 

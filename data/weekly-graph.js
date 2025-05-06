@@ -22,6 +22,8 @@ export function createWeekGraph() {
       }],
     },
     options: {
+      responsive: true,
+      maintainAspectRatio: false,
       plugins: {
         title: {
           display: true,
@@ -188,6 +190,6 @@ function graph() {
   // console.log(graphPoints)
   return graphPoints
 }
-function filter(){
-  
+function filter() {
+
 }
