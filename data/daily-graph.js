@@ -97,8 +97,8 @@ function daygraph() {
     }
     return array
 }
-// filterBtn.addEventListener("click", () => {
-//     currentDate = filterInput.value
-//     createDayGraph()
-//     // activeTask(currentDate)
-// })
+filterBtn.addEventListener("click", () => {
+    currentDate = filterInput.value
+    createDayGraph()
+    activeTask(currentDate)
+})
